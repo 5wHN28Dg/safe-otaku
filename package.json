@@ -1,0 +1,22 @@
+{
+  "name": "mangadex-safe",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-hosted, read-only, safe-mode MangaDex frontend for OpenWrt",
+  "license": "AGPL-3.0-only",
+  "scripts": {
+    "build:js": "esbuild src/index.js --bundle --outfile=dist/bundle.js --format=esm --minify --jsx=automatic --jsx-import-source=preact",
+    "build:static": "node scripts/copy-static.js",
+    "build": "npm run build:js && npm run build:static",
+    "size": "node -e \"const fs=require('fs');const b=fs.statSync('dist/bundle.js').size;console.log('bundle.js:', (b/1024).toFixed(1), 'KB gzipped approx:', (b/1024/3).toFixed(1), 'KB')\"",
+    "blocklist:audit": "node scripts/blocklist.mjs audit",
+    "blocklist:build": "node scripts/blocklist.mjs build"
+  },
+  "dependencies": {
+    "preact": "^10.24.0",
+    "htm": "^3.1.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
+}
