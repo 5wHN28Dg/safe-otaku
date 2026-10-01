@@ -47,6 +47,18 @@ nginx would handle concurrency in one process and offer a cleaner `proxy_pass` m
 
 This tradeoff is documented so future contributors do not re-litigate it without new information. If you have measured idle RSS for both and the numbers differ from the above, say so and reopen the question.
 
+## Why the CGI, not a uhttpd ucode handler (checked against OpenWrt 25.12.5)
+
+The router runs OpenWrt 25.12.5. Its source (tag `v25.12.5`, uhttpd `7b1bec4`, uclient `daad21f`) was checked for anything that should change this architecture:
+
+- **ucode handlers fork per request too.** In 25.12, LuCI runs as a uhttpd ucode handler (`luci-base` registers `ucode_prefix`). But uhttpd's `ucode_handle_request` calls `create_process`, which `fork()`s a child per request, just like CGI. Moving the proxy to ucode would only skip the `exec` of `sh` and `uclient-fetch` inside that child. It would need `ucode-mod-uclient` (not a default package) and an async HTTP client written against uloop. Not worth it unless per-request latency is measured on the router and found to matter.
+- **One shared limit.** ucode and CGI handlers both count against `max_requests` (default 3). LuCI and this app share those three slots: a chapter loading pages can make LuCI wait, and the reverse.
+- **`uclient-fetch` is still a default package**, with TLS through `libustream-mbedtls`, and still takes the flags `cgi/md` uses (`-q`, `-O`, `-T`, `--user-agent`). It now also has `--header`, `--method`, `--body-data` and `--body-file`. Nothing uses them yet; they would be how an authenticated request is forwarded without adding a package.
+- **uhttpd passes `HTTP_AUTHORIZATION` and `HTTP_COOKIE` to CGI.** The current CGI ignores both.
+- **25.12 uses `apk` instead of `opkg`.** No effect here: the project installs no packages.
+
+Conclusion: no architectural change. Revisit if CGI latency is measured as a problem, or if an auth feature is approved.
+
 ## Rules for changes
 
 **Do not add runtime dependencies to the CGI.** It runs on BusyBox ash. `uclient-fetch` is what ships with OpenWrt. Do not replace it with `curl` unless `curl` is already present and you have a reason.
@@ -129,7 +141,7 @@ Measured: `npm run size` reports 11.3 KB gzipped total (`bundle.js` 9.4 KB). The
 
 Rules for changes:
 
-- **`blocklist/sites.tsv` is the reviewed source of truth.** The `.txt` files are generated. Change a site's tier in the TSV and run `npm run blocklist:build`; never edit the `.txt` files by hand.
+- **`blocklist/sites.tsv` and `blocklist/extensions.tsv` are the reviewed sources of truth.** The `.txt` files are generated. Change a tier in the TSV and run `npm run blocklist:build`; never edit the `.txt` files by hand.
 - **Every tier needs evidence** in the `evidence` column. Say whether it was verified (labels found, API response) or inferred.
 - **Keep the proxy's upstreams resolvable.** `api.mangadex.org` and `uploads.mangadex.org` are in `blocklist/allowlist.txt` and in the script's `NEVER` set. The router's own dnsmasq serves the CGI, so blocking them breaks the proxy.
 - **Only count a "safe" endpoint as safe if the server enforces the filter.** Show that non-safe content is refused, not just hidden. Currently only `safebooru.donmai.us` qualifies.

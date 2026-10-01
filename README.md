@@ -46,7 +46,7 @@ Bundle sizes are measured with `npm run size`. Per-request RAM and CPU still nee
 
 ## Requirements
 
-- OpenWrt 22.03 or later on the router
+- OpenWrt 22.03 or later on the router (the target runs 25.12.5; see AGENT.md for what was checked against it)
 - `uhttpd` with CGI support (installed by default with LuCI)
 - `uclient-fetch` (installed by default)
 - A development machine with Node.js 18+ and npm for building the frontend

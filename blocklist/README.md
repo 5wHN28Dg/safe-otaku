@@ -1,6 +1,9 @@
 # NSFW otaku-site blocklist
 
-Supplementary blocklists for adblock-lean on OpenWrt. They cover sites listed on [everythingmoe.com](https://everythingmoe.com) that host NSFW content, offer no network-enforceable way to filter it, and are not already blocked by Hagezi NSFW.
+Supplementary blocklists for adblock-lean on OpenWrt. They cover NSFW sites that offer no network-enforceable way to filter, and that Hagezi NSFW does not already block. There are two sources:
+
+- **everythingmoe:** sites listed on [everythingmoe.com](https://everythingmoe.com).
+- **Extension repos:** source sites in the reader-app extension repos everythingmoe links to, which apps like Mihon, Aniyomi, Mangayomi and Hayase install sources from.
 
 "NSFW" here includes ecchi. Anything sexualised is in scope, not just explicit content.
 
@@ -8,7 +11,8 @@ Supplementary blocklists for adblock-lean on OpenWrt. They cover sites listed on
 
 | File | What it holds | Deploy? |
 |---|---|---|
-| `sites.tsv` | Every everythingmoe site with its tier, the evidence for it, and all known domains and mirrors. Reviewed by hand; the other files are generated from it. | Source of truth |
+| `sites.tsv` | Every everythingmoe site with its tier, the evidence for it, and all known domains and mirrors. Reviewed by hand. | Source of truth |
+| `extensions.tsv` | Every source host from the extension repos, with the maintainer's NSFW label, the tier, the evidence and the extensions that use it | Source of truth |
 | `explicit.txt` | Hentai/porn/smut sites, sites with explicit genres (Hentai, Smut, Adult, Pornographic, R-18), adult stores, hentai reader apps, leak archives, mangadex.org | Yes |
 | `ecchi.txt` | Unofficial aggregators with an Ecchi genre, plus full-catalogue anime/manga/novel mirrors whose catalogues include ecchi titles | Yes |
 | `allowlist.txt` | `api.mangadex.org` and `uploads.mangadex.org`, so the router proxy keeps working after `mangadex.org` is blocked | Yes, with `explicit.txt` |
@@ -43,7 +47,7 @@ dig @192.168.1.1 api.mangadex.org      # resolves
 dig @192.168.1.1 sukebei.nyaa.si       # NXDOMAIN
 ```
 
-Cost: roughly 800 extra domains on top of Hagezi's 84k. That is under 1% more dnsmasq entries and under 20 KB.
+Cost: about 1,460 extra domains on top of Hagezi's 84k. That is under 2% more dnsmasq entries and about 22 KB.
 
 ## Safe endpoints
 
@@ -81,14 +85,37 @@ DNS blocking stops a browser from reaching a hostname. It does not stop:
 
 - **`api.mangadex.org` and `uploads.mangadex.org`.** They stay resolvable for the proxy, so a LAN client that talks to the JSON API directly, or has a direct image URL, reaches unfiltered content. Doing that takes deliberate effort; clicking a link won't do it.
 - **Links straight to `cdn.donmai.us`.** Explicit Danbooru images are served from the same CDN as safebooru; you need the file's hash to reach one.
-- **Reader-app sources outside everythingmoe.** Extension repos such as Keiyoushi's (for Mihon) bundle well over a thousand sources. This list covers only the sites everythingmoe lists, so an app can still reach a source site that isn't on everythingmoe or in Hagezi.
+- **Extension repos not in `REPOS`.** The audit covers the 15 repo indexes linked from everythingmoe's app guides (Keiyoushi, Aniyomi forks, Mangayomi, Hayase). A repo added by URL inside an app is not covered until it is added to `REPOS` in `scripts/blocklist.mjs`.
+- **Sources addressed by IP or set at runtime.** About ten extensions use raw IP addresses and some leave `baseUrl` empty and pick the domain at runtime. DNS cannot block an IP, and an empty URL leaves nothing to list.
+- **Kaguya modules.** Its index lists module names without URLs, so it cannot be audited this way.
 - **New mirrors.** They appear constantly. Re-run the audit.
 - **VPNs, and IP-literal or Tor access.** Your router already blocks DoH/DoT; a VPN is a firewall question, not a DNS one.
+
+## Extension repos
+
+Reader apps are frontends; what they can reach is decided by the sources in their extension repos. Each repo maintainer labels its sources:
+
+- **Keiyoushi:** `CONTENT_WARNING_SAFE`, `MIXED` ("a mix of SFW and NSFW entries") or `NSFW`.
+- **Aniyomi forks and Mangayomi:** an `nsfw` / `isNsfw` flag.
+- **Hayase:** separate index files, one of them `hentai`.
+
+The labels decide the tier in `extensions.tsv`:
+
+| Maintainer label | Tier | Why |
+|---|---|---|
+| NSFW | `explicit` | The maintainer's own label is the evidence. |
+| MIXED | `explicit`, or `review` for 43 licensed services (Japanese publishers, LINE Manga, Piccoma, Tencent, U-NEXT, DeviantArt…) | Same line as `sites.tsv`: licensed/mainstream services are not blocked. Adult-focused stores (DMM/FANZA, Comic Festa, Manga Kingdom, Toptoon, Honeytoon) stay `explicit`. |
+| SAFE | `explicit` or `ecchi` only with verified labels; otherwise `safe` (not blocked) | Keiyoushi's SAFE means "no NSFW entries", which may still include ecchi, so these were checked the same way as everythingmoe sites. A genre URL only counted if a made-up genre at the same path did not also match; 9 sites echo any path into the title and lost that evidence. Three more matches were overridden by hand (noted in the evidence column). |
+| any | `covered` | The host is already classified in `sites.tsv`, and that decision stands. |
+
+Results from the first audit (2026-10-01): 2,073 hosts from 2,221 extensions. 804 are `explicit` and 61 `ecchi`; 668 of those were reachable before this list, the rest were already in Hagezi. 883 SAFE-labelled hosts showed no evidence or could not be checked (Cloudflare challenge, unreachable) and are not blocked.
+
+The audit adds new hosts automatically: NSFW and MIXED as `explicit`, SAFE as `unreviewed` (not emitted). It prints new MIXED hosts so licensed services can be moved to `review`.
 
 ## Maintain
 
 ```
-npm run blocklist:audit   # re-scrape everythingmoe + Hagezi, add new domains, rebuild
+npm run blocklist:audit   # re-fetch everythingmoe, the extension repos and Hagezi, add new domains, rebuild
 npm run blocklist:build   # rebuild the .txt files after editing sites.tsv
 ```
 
