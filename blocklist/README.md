@@ -11,11 +11,14 @@ Supplementary blocklists for adblock-lean on OpenWrt. They cover sites listed on
 | `sites.tsv` | Every everythingmoe site with its tier, the evidence for it, and all known domains and mirrors. Reviewed by hand; the other files are generated from it. | Source of truth |
 | `explicit.txt` | Hentai/porn/smut sites, sites with explicit genres (Hentai, Smut, Adult, Pornographic, R-18), adult stores, hentai reader apps, leak archives, mangadex.org | Yes |
 | `ecchi.txt` | Unofficial aggregators with an Ecchi genre, plus full-catalogue anime/manga/novel mirrors whose catalogues include ecchi titles | Yes |
-| `apps.txt` | Landing and download sites for reader apps (Mihon, Aniyomi, Paperback…) and the extension repos they install sources from | Your call |
-| `review.txt` | Licensed/mainstream services (Crunchyroll, Netflix, MANGA Plus, Webtoon, pixiv…), databases (MAL, AniList…) and general film/drama piracy. They carry ecchi or mature content, and the only controls are per-account. | Your call |
 | `allowlist.txt` | `api.mangadex.org` and `uploads.mangadex.org`, so the router proxy keeps working after `mangadex.org` is blocked | Yes, with `explicit.txt` |
 
 Domains already covered by Hagezi NSFW are left out of the generated lists (marked `+` in `sites.tsv`). adblock-lean deduplicates across lists anyway.
+
+Two more tiers in `sites.tsv` are reviewed but deliberately not blocked; the script tracks their domains and does not emit them:
+
+- **`apps` (75 sites).** Landing and download pages for reader apps (Mihon, Aniyomi, Paperback…) and their extension repos. The apps are frontends, and they fetch from source sites that `explicit.txt` and `ecchi.txt` already block.
+- **`review` (109 sites).** Licensed and mainstream services (Crunchyroll, Netflix, MANGA Plus, Webtoon, pixiv…), databases (MAL, AniList…) and general film/drama piracy. They carry some ecchi or mature content behind per-account controls; blocking them outright is out of proportion.
 
 The `clean` tier holds 232 sites with nothing to block: trackers, schedules, music, quizzes, tools, subtitle sites and similar.
 
@@ -78,7 +81,7 @@ DNS blocking stops a browser from reaching a hostname. It does not stop:
 
 - **`api.mangadex.org` and `uploads.mangadex.org`.** They stay resolvable for the proxy, so a LAN client that talks to the JSON API directly, or has a direct image URL, reaches unfiltered content. Doing that takes deliberate effort; clicking a link won't do it.
 - **Links straight to `cdn.donmai.us`.** Explicit Danbooru images are served from the same CDN as safebooru; you need the file's hash to reach one.
-- **Reader-app extensions hosted on `raw.githubusercontent.com`.** Blocking that host would break GitHub. `apps.txt` only blocks repos on their own hostnames (e.g. `keiyoushi.github.io`). The sources those extensions fetch from are covered by `explicit.txt` and `ecchi.txt`.
+- **Reader-app sources outside everythingmoe.** Extension repos such as Keiyoushi's (for Mihon) bundle well over a thousand sources. This list covers only the sites everythingmoe lists, so an app can still reach a source site that isn't on everythingmoe or in Hagezi.
 - **New mirrors.** They appear constantly. Re-run the audit.
 - **VPNs, and IP-literal or Tor access.** Your router already blocks DoH/DoT; a VPN is a firewall question, not a DNS one.
 

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'preact/hooks';
-import { html } from '../lib/html.js';
 import {
   getManga,
   getChapters,
@@ -7,8 +6,9 @@ import {
   getMangaTitle,
   getMangaDescription,
   getAuthorName,
+  getGroupName,
 } from '../lib/api.js';
-import { navigate, appPath } from '../lib/router.js';
+import { appPath } from '../lib/router.js';
 import { addFavorite, removeFavorite, isFavorite } from '../lib/db.js';
 
 export function Detail({ id }) {
@@ -23,11 +23,13 @@ export function Detail({ id }) {
     setLoading(true);
     setError(null);
 
-    Promise.all([getManga(id), getChapters(id, 200, 0)])
-      .then(([m, c]) => {
+    getManga(id)
+      .then(async (m) => {
+        // Only ask for chapters once the filtered lookup has returned the title.
+        const c = m ? await getChapters(id) : [];
         if (cancelled) return;
-        setManga(m.data);
-        setChapters(c.data || []);
+        setManga(m);
+        setChapters(c);
         setLoading(false);
       })
       .catch((err) => {
@@ -56,9 +58,9 @@ export function Detail({ id }) {
     }
   }
 
-  if (loading) return html`<div class="loading">Loading…</div>`;
-  if (error) return html`<div class="error">${error}</div>`;
-  if (!manga) return html`<div class="notfound">Not found.</div>`;
+  if (loading) return <p class="loading" role="status">Loading…</p>;
+  if (error) return <p class="error" role="alert">{error}</p>;
+  if (!manga) return <p class="notfound">Not available.</p>;
 
   const cover = getCoverUrl(manga);
   const title = getMangaTitle(manga);
@@ -68,48 +70,47 @@ export function Detail({ id }) {
     .map((t) => t.attributes?.name?.en)
     .filter(Boolean);
 
-  return html`
+  return (
     <div>
       <div class="detail">
-        ${cover && html`<img class="cover" src=${cover} alt=${title} />`}
+        {cover && <img class="cover" src={cover} alt="" width="300" height="450" />}
         <div>
-          <h2>${title}</h2>
-          ${author && html`<div class="meta">by ${author}</div>`}
-          ${description && html`<p class="description">${description}</p>`}
-          ${tags.length > 0 && html`
-            <div class="tags">
-              ${tags.map((t) => html`<span class="tag" key=${t}>${t}</span>`)}
-            </div>
-          `}
+          <h2>{title}</h2>
+          {author && <p class="meta">by {author}</p>}
+          {description && <p class="description">{description}</p>}
+          {tags.length > 0 && (
+            <ul class="tags" aria-label="Tags">
+              {tags.map((t) => <li class="tag" key={t}>{t}</li>)}
+            </ul>
+          )}
           <div class="actions">
-            <button class=${fav ? '' : 'primary'} onClick=${toggleFavorite}>
-              ${fav ? 'Remove from favorites' : 'Add to favorites'}
+            <button class={fav ? '' : 'primary'} aria-pressed={fav} onClick={toggleFavorite}>
+              {fav ? 'Remove from favorites' : 'Add to favorites'}
             </button>
           </div>
         </div>
       </div>
 
       <h3>Chapters</h3>
-      ${chapters.length === 0
-        ? html`<div class="loading">No chapters available.</div>`
-        : html`
+      {chapters.length === 0
+        ? <p class="loading">No English chapters hosted on MangaDex.</p>
+        : (
           <ul class="chapter-list">
-            ${chapters.map((ch) => {
+            {chapters.map((ch) => {
               const num = ch.attributes?.chapter || '?';
               const chTitle = ch.attributes?.title || '';
-              const pages = ch.attributes?.pages || 0;
-              const href = appPath(`/read/${id}/${ch.id}`);
-              return html`
-                <li key=${ch.id}>
-                  <a href=${href} onClick=${(e) => { e.preventDefault(); navigate(href); }}>
-                    <span>Chapter ${num}${chTitle ? ` — ${chTitle}` : ''}</span>
-                    <span class="chapter-meta">${pages} pages</span>
+              const group = getGroupName(ch);
+              return (
+                <li key={ch.id}>
+                  <a href={appPath(`/read/${id}/${ch.id}`)}>
+                    <span>Chapter {num}{chTitle ? ` — ${chTitle}` : ''}</span>
+                    <span class="chapter-meta">{group || `${ch.attributes?.pages || 0} pages`}</span>
                   </a>
                 </li>
-              `;
+              );
             })}
           </ul>
-        `}
+        )}
     </div>
-  `;
+  );
 }

@@ -1,5 +1,8 @@
+// Calls go through the router CGI, which forwards only these endpoints and
+// query keys and appends the content ratings itself. See cgi/md.
 const API_BASE = '/cgi-bin/md/api';
 const IMG_BASE = '/cgi-bin/md/img';
+const FEED_PAGE = 500; // MangaDex maximum for /manga/{id}/feed
 
 async function fetchApi(path, params = {}) {
   const url = new URL(API_BASE + path, window.location.origin);
@@ -12,11 +15,12 @@ async function fetchApi(path, params = {}) {
     }
   }
   const res = await fetch(url.toString());
-  if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    throw new Error(`API ${res.status}: ${text || res.statusText}`);
-  }
-  return res.json();
+  if (res.status === 403) throw new Error('Not available.');
+  if (!res.ok) throw new Error(`API ${res.status}`);
+  const text = await res.text();
+  // uclient-fetch failures arrive as an empty 200 body.
+  if (!text) throw new Error('MangaDex did not respond. Try again.');
+  return JSON.parse(text);
 }
 
 export function searchManga(query, limit = 24, offset = 0) {
@@ -30,20 +34,30 @@ export function searchManga(query, limit = 24, offset = 0) {
   return fetchApi('/manga', params);
 }
 
-export function getManga(id) {
-  return fetchApi(`/manga/${id}`, {
+// /manga/{id} ignores content ratings, so look the title up through the filtered list.
+export async function getManga(id) {
+  const res = await fetchApi('/manga', {
+    'ids[]': [id],
     'includes[]': ['cover_art', 'author', 'artist'],
   });
+  return res.data?.[0] || null;
 }
 
-export function getChapters(mangaId, limit = 100, offset = 0) {
-  return fetchApi(`/manga/${mangaId}/feed`, {
-    limit,
-    offset,
-    'translatedLanguage[]': ['en'],
-    'order[chapter]': 'asc',
-    'includes[]': ['scanlation_group'],
-  });
+// All English chapters hosted on MangaDex, in reading order.
+export async function getChapters(mangaId) {
+  const chapters = [];
+  for (let offset = 0; ; offset += FEED_PAGE) {
+    const res = await fetchApi(`/manga/${mangaId}/feed`, {
+      limit: FEED_PAGE,
+      offset,
+      'translatedLanguage[]': ['en'],
+      'order[chapter]': 'asc',
+      'includes[]': ['scanlation_group'],
+      includeExternalUrl: 0,
+    });
+    chapters.push(...(res.data || []));
+    if (offset + FEED_PAGE >= res.total) return chapters;
+  }
 }
 
 export function getChapterImages(chapterId) {
@@ -74,4 +88,9 @@ export function getMangaDescription(manga) {
 export function getAuthorName(manga) {
   const author = manga.relationships?.find((r) => r.type === 'author');
   return author?.attributes?.name || '';
+}
+
+export function getGroupName(chapter) {
+  const group = chapter.relationships?.find((r) => r.type === 'scanlation_group');
+  return group?.attributes?.name || '';
 }

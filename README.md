@@ -1,12 +1,12 @@
 # mangadex-safe
 
-A self-hosted, read-only MangaDex frontend that hardcodes the `safe` and `suggestive` content ratings on every request. Designed to run on an OpenWrt router (tested against Xiaomi Redmi Router AX6S, MediaTek MT7622, 256 MB RAM) with no additional runtime, no Node process, and no router-side image cache.
+A self-hosted, read-only MangaDex frontend that hardcodes the `safe` and `suggestive` content ratings on every request. Designed to run on an OpenWrt router (target: Xiaomi Redmi Router AX6S, MediaTek MT7622, 256 MB RAM) with no additional runtime, no Node process, and no router-side image cache.
 
 ## What this is not
 
 This is not a transparent content filter. It is a separate, stripped-down site served from your LAN. `mangadex.org` is still reachable unless you block it at the DNS level. Anyone on the network who types the real hostname gets the real site, with all content ratings. `blocklist/` has adblock-lean lists that block it (while keeping the proxy's upstreams reachable), along with other NSFW otaku sites. See `blocklist/README.md`.
 
-What this does: gives you a safe-mode view of MangaDex at a hostname you control, with the ratings enforced server-side by the CGI proxy. The threat model is a household member clicking a bookmark, not an adversary editing URLs.
+What this does: gives you a safe-mode view of MangaDex at a hostname you control, with the ratings enforced server-side by the CGI proxy. Editing URLs or calling the proxy by hand does not get past the filter; see [Content filtering](#content-filtering).
 
 ## Why a proxy is required
 
@@ -22,26 +22,27 @@ A browser-based frontend cannot call `api.mangadex.org` directly, and cannot loa
 [Browser] --> uhttpd :80
               |
               +--> /mangadex-safe/*      static files from flash
-              +--> /cgi-bin/md/api/*     CGI -> api.mangadex.org
-              +--> /cgi-bin/md/img/*     CGI -> uploads.mangadex.org
+              +--> /cgi-bin/md/api/*     CGI -> api.mangadex.org      (allowlisted endpoints only)
+              +--> /cgi-bin/md/img/*     CGI -> uploads.mangadex.org  (covers and chapter pages only)
 ```
 
-Everything is same-origin from the browser's perspective. No CORS headers needed.
+Everything is same-origin from the browser's perspective. No CORS headers are needed.
 
-The CGI script is one shell file. It strips any client-supplied `contentRating[]` parameter and injects `safe` and `suggestive`. Image requests are path-restricted to `/covers/` and `/data/` and forwarded to `uploads.mangadex.org`. No caching on the router; `Cache-Control: public, max-age=86400` tells the browser to cache instead.
+The CGI script is one shell file. Routes use the URL hash (`/mangadex-safe/#/manga/<id>`), because uhttpd serves files only and cannot fall back to `index.html` for a deep link.
+
+Nothing is cached on the router. Covers and pages are content-addressed, so the CGI sends `Cache-Control: public, max-age=31536000, immutable` and the browser keeps them.
 
 ## Resource footprint
 
-| Resource ↕▾ | Usage ↕▾ |
+| Resource | Usage |
 |---|---|
-| −Flash | ~3 KB for the CGI script, ~80 KB for the frontend bundle |
-| −RAM at idle | 0 (uhttpd is already running for LuCI) |
-| RAM per request | ~3 MB, freed when the CGI exits |
-| CPU per request | ~10 ms fork+exec on MT7622 |
+| Flash | 3.8 KB for the CGI script; 31.7 KB for the frontend (`bundle.js` 24.4 KB, `styles.css` 6.7 KB, `index.html` 0.6 KB), 11.3 KB gzipped |
+| RAM at idle | 0 (uhttpd is already running for LuCI) |
+| RAM per request | not yet measured on the router; one short-lived `sh` plus `uclient-fetch` |
+| Processes per request | one `exec`; opening a chapter adds one rating-check fetch |
 | Disk for cache | 0 (browser caches images) |
-⚙
 
-Measured against a base OpenWrt install using 100–150 MB of 256 MB. The CGI runs only during a request. No persistent process, no package installation beyond what OpenWrt already ships.
+Bundle sizes are measured with `npm run size`. Per-request RAM and CPU still need measuring on the router (see AGENT.md, Testing).
 
 ## Requirements
 
@@ -49,6 +50,7 @@ Measured against a base OpenWrt install using 100–150 MB of 256 MB. The CGI ru
 - `uhttpd` with CGI support (installed by default with LuCI)
 - `uclient-fetch` (installed by default)
 - A development machine with Node.js 18+ and npm for building the frontend
+- For `npm run dev` only: `busybox` and `curl` on the development machine
 
 ## Build
 
@@ -57,15 +59,17 @@ On your development machine:
 ```
 npm install
 npm run build
+npm run size
 ```
 
-This produces `dist/index.html`, `dist/bundle.js`, and `dist/styles.css`.
+This produces `dist/index.html`, `dist/bundle.js`, and `dist/styles.css`, and reports their gzipped sizes.
 
 ## Install on the router
 
 Copy the build output and the CGI script:
 
 ```
+ssh root@192.168.1.1 'mkdir -p /www/mangadex-safe'
 scp -r dist/* root@192.168.1.1:/www/mangadex-safe/
 scp cgi/md root@192.168.1.1:/www/cgi-bin/md
 ```
@@ -88,23 +92,24 @@ If it is missing, add it and reload:
 /etc/init.d/uhttpd reload
 ```
 
-Verify the proxy works:
+Verify the proxy works and refuses what it should:
 
 ```
-wget -O- 'http://localhost/cgi-bin/md/api/manga?limit=1'
+wget -O- 'http://localhost/cgi-bin/md/api/manga?limit=1'       # JSON with a data array
+wget -O- 'http://localhost/cgi-bin/md/api/manga/random'        # 403 Forbidden
 ```
-
-You should get JSON. If you get a 404, `PATH_INFO` is not being passed to the CGI — see the troubleshooting section.
 
 Open `http://192.168.1.1/mangadex-safe/` in a browser.
 
 ## Troubleshooting
 
-**CGI returns 404 for every request.** uhttpd is not passing `PATH_INFO`. Check `/etc/config/uhttpd` for `option cgi_prefix '/cgi-bin'` and, if needed, `option path_info '1'`. Reload uhttpd after changes.
+**CGI returns 403 for every request.** uhttpd is not passing `PATH_INFO`, so no route matches. Check `/etc/config/uhttpd` for `option cgi_prefix '/cgi-bin'` and reload uhttpd after changes.
 
 **`uclient-fetch` fails with "unknown option".** Different OpenWrt versions use different flags for User-Agent and timeout. Run `uclient-fetch --help` on the router and adjust `cgi/md` if the flags differ. The script uses `--user-agent` and `-T`; older builds may require `-U` and `-t`.
 
 **Images return a broken file named `agg.jpg`.** MangaDex serves a placeholder image when a request lacks a valid `User-Agent` or carries a `Via` header. Confirm the CGI sets `User-Agent` and does not forward `Via`. The script already does both; if you edited it, check those lines.
+
+**Pages load slowly, a few at a time.** OpenWrt's stock uhttpd config has `option max_requests 3`, so at most three CGI requests run at once and the rest queue. Raising it lets more images load in parallel, at the cost of more short-lived processes. Measure `free -m` while reading before and after changing it.
 
 **Rate limiting kicks in.** MangaDex enforces roughly 5 requests per second per IP. The CGI does not throttle locally; if the router's IP is shared, this can be hit by accident. Space out large loads, or add a token bucket to the CGI.
 
@@ -114,31 +119,33 @@ Open `http://192.168.1.1/mangadex-safe/` in a browser.
 npm run dev
 ```
 
-Rebuilds and reports the bundle size. There is no local server; the frontend is designed to be served by uhttpd from the router.
-
-To test locally without a router, run any static server from `dist/` and set up a local CGI-compatible proxy at `/cgi-bin/md/*`. Most developers will find it faster to build and copy to the router.
+Builds, then serves the app at `http://127.0.0.1:8080/mangadex-safe/` with a local stand-in for the router. Static files come from `dist/`, and `/cgi-bin/md/*` runs the real `cgi/md` under BusyBox ash, with `uclient-fetch` swapped for a curl wrapper. It is close to the router, not identical: CGI changes still need testing on the router.
 
 ## Project layout
 
 ```
 .
-├── cgi/md                  # The CGI proxy script (runs on the router)
+├── cgi/md                    # The CGI proxy script (runs on the router)
+├── blocklist/                # adblock-lean lists for NSFW otaku sites
+├── scripts/
+│   ├── copy-static.js        # build helper
+│   ├── dev-server.mjs        # local stand-in for uhttpd + CGI (npm run dev)
+│   └── blocklist.mjs         # blocklist audit and build
 ├── src/
-│   ├── index.html          # App shell, CSP meta tag
-│   ├── styles.css          # All styles
-│   ├── index.js            # Entry point
-│   ├── app.js              # Top-level component and routing dispatch
+│   ├── index.html            # App shell, CSP meta tag
+│   ├── styles.css            # All styles
+│   ├── index.jsx             # Entry point
+│   ├── app.jsx               # Top-level component and routing dispatch
 │   ├── lib/
-│   │   ├── api.js          # API client and URL builders
-│   │   ├── db.js           # IndexedDB wrappers (favorites, reading position)
-│   │   ├── html.js         # htm/preact binding
-│   │   └── router.js       # History API router
+│   │   ├── api.js            # API client and URL builders
+│   │   ├── db.js             # IndexedDB wrappers (favorites, reading position)
+│   │   └── router.js         # Hash router
 │   └── components/
-│       ├── Header.js
-│       ├── Browse.js
-│       ├── Detail.js
-│       ├── Reader.js
-│       └── Favorites.js
+│       ├── Header.jsx
+│       ├── Browse.jsx
+│       ├── Detail.jsx
+│       ├── Reader.jsx
+│       └── Favorites.jsx
 ├── package.json
 ├── LICENSE
 └── README.md
@@ -146,15 +153,24 @@ To test locally without a router, run any static server from `dist/` and set up 
 
 ## Content filtering
 
-Two ratings are allowed: `safe` and `suggestive`. The CGI strips any `contentRating[]` parameter the frontend might send, then appends `contentRating[]=safe` and `contentRating[]=suggestive` to every API request. The frontend does not send these parameters.
+Two ratings are allowed: `safe` and `suggestive`. The CGI appends `contentRating[]=safe` and `contentRating[]=suggestive` to every API request it forwards.
 
-To add or remove ratings, edit the `url=` line in `cgi/md`:
+Appending them is not enough on its own. MangaDex ignores `contentRating[]` on its by-ID endpoints (`/manga/<id>`, `/at-home/server/<id>`), and it accepts the parameter in several encodings (`%5b%5d`, `%5B0%5D`, `[0]`). So the CGI works from an allowlist:
+
+- **Endpoints.** Only three API routes are forwarded: `/manga` (list and search), `/manga/<uuid>/feed`, and `/at-home/server/<uuid>`. Everything else returns 403. The frontend looks up single titles through `/manga?ids[]=<id>`, which applies the ratings.
+- **Query keys.** Only the keys the frontend sends are forwarded. Any other key, including every spelling of `contentRating`, is dropped.
+- **Chapter pages.** `/at-home/server/<id>` ignores ratings, so before forwarding it the CGI asks `/chapter?ids[]=<id>` with the ratings applied. If MangaDex doesn't return the chapter, the request gets a 403.
+- **Images.** Only `/covers/<uuid>/<file>` and `/data/<hash>/<file>` with plain file names are proxied.
+
+To add or remove ratings, edit the `RATINGS=` line in `cgi/md`:
 
 ```
-url="${API}${path}?${clean}&contentRating%5B%5D=safe&contentRating%5B%5D=suggestive"
+RATINGS="contentRating%5B%5D=safe&contentRating%5B%5D=suggestive"
 ```
 
-MangaDex ratings are `safe`, `suggestive`, `erotica`, and `pornographic`. The `erotica` and `pornographic` ratings are never requested.
+MangaDex ratings are `safe`, `suggestive`, `erotica`, and `pornographic`. MangaDex has no Ecchi tag. Uploaders put ecchi titles under `suggestive` or `erotica`, so `suggestive` lets some ecchi through, alongside mainstream titles such as One Piece and Jujutsu Kaisen.
+
+Known residual: someone who already has a cover file name or a chapter image hash from outside this app can fetch that one image through `/img/`. The app itself never hands out names or hashes for titles outside the allowed ratings.
 
 ## What this does not do
 
@@ -166,10 +182,10 @@ MangaDex ratings are `safe`, `suggestive`, `erotica`, and `pornographic`. The `e
 
 ## Security notes
 
-- The CSP meta tag in `index.html` restricts scripts and connections to same-origin.
-- The CGI validates that image paths begin with `/covers/` or `/data/`. Other paths return 403.
-- The CGI does not forward client-supplied headers other than the request path. `Via` is not set.
-- uhttpd runs the CGI as the configured CGI user (typically `nobody` on OpenWrt). The script does not require write access to any path.
+- uhttpd on OpenWrt runs as root, and so do its CGI scripts. Treat `cgi/md` as root-run code: it validates every path segment, forwards only allowlisted endpoints and keys, and passes the URL to `uclient-fetch` as a single quoted argument.
+- The CGI accepts only `GET`.
+- The CGI does not forward client-supplied headers. `Via` is not set.
+- The CSP meta tag in `index.html` restricts scripts, styles, images and connections to same-origin. `frame-ancestors` is left out: browsers ignore it in a meta tag, and uhttpd cannot add response headers to static files.
 
 ## License
 

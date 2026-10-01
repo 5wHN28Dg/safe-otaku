@@ -17,8 +17,12 @@ const DIR = path.join(ROOT, 'blocklist');
 const TSV = path.join(DIR, 'sites.tsv');
 const HEADER = '# slug\ttier\tsection\tname\tevidence\tdomains (+ = already in Hagezi NSFW at audit time)';
 
-// Emitted in this order. A domain listed under two tiers goes to the stricter one.
-const TIERS = ['explicit', 'ecchi', 'apps', 'review'];
+// Emitted in this order. A domain listed under both tiers goes to the stricter one.
+const TIERS = ['explicit', 'ecchi'];
+// Reviewed but deliberately not blocked. apps: reader apps fetch from the source
+// sites, which the emitted tiers already cover. review: licensed/mainstream
+// services; blocking them is out of proportion. Domains are still tracked.
+const NOT_BLOCKED = new Set(['apps', 'review']);
 const NO_DOMAINS = new Set(['clean', 'safe-endpoint']);
 
 const EM = 'https://everythingmoe.com';
@@ -84,7 +88,7 @@ function build() {
     fs.writeFileSync(path.join(DIR, `${tier}.txt`), [...head, ...out, ''].join('\n'));
     console.log(`${tier}.txt: ${out.length} domains`);
   }
-  const pending = sites.filter((s) => !TIERS.includes(s.tier) && !NO_DOMAINS.has(s.tier));
+  const pending = sites.filter((s) => !TIERS.includes(s.tier) && !NOT_BLOCKED.has(s.tier) && !NO_DOMAINS.has(s.tier));
   if (pending.length) console.log(`unreviewed: ${pending.map((s) => s.slug).join(', ')}`);
 }
 
