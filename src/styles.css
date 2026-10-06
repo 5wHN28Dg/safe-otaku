@@ -235,6 +235,12 @@ main {
   background: var(--accent-hover);
 }
 
+.chapter-note {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0 0 0.75rem;
+}
+
 .chapter-list {
   list-style: none;
   padding: 0;

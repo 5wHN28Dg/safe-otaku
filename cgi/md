@@ -28,7 +28,7 @@ UUID="$H4$H4-$H4-$H4-$H4-$H4$H4$H4"
 HASH="$H4$H4$H4$H4$H4$H4$H4$H4"
 
 deny() {
-  printf 'Status: 403\r\n'
+  printf 'Status: 403 Forbidden\r\n'
   printf 'Content-Type: text/plain\r\n'
   printf '\r\n'
   printf 'Forbidden\n'

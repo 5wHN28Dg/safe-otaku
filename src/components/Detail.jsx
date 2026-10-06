@@ -7,6 +7,8 @@ import {
   getMangaDescription,
   getAuthorName,
   getGroupName,
+  getExternalUrl,
+  isHosted,
 } from '../lib/api.js';
 import { appPath } from '../lib/router.js';
 import { addFavorite, removeFavorite, isFavorite } from '../lib/db.js';
@@ -92,25 +94,41 @@ export function Detail({ id }) {
       </div>
 
       <h3>Chapters</h3>
-      {chapters.length === 0
-        ? <p class="loading">No English chapters hosted on MangaDex.</p>
-        : (
-          <ul class="chapter-list">
-            {chapters.map((ch) => {
-              const num = ch.attributes?.chapter || '?';
-              const chTitle = ch.attributes?.title || '';
-              const group = getGroupName(ch);
+      {chapters.length === 0 && <p class="loading">No English chapters on MangaDex.</p>}
+      {chapters.length > 0 && !chapters.some(isHosted) && (
+        <p class="chapter-note">
+          This series is licensed. MangaDex only links to the official publisher, so chapters open on their site.
+        </p>
+      )}
+      {chapters.length > 0 && (
+        <ul class="chapter-list">
+          {chapters.map((ch) => {
+            const num = ch.attributes?.chapter || '?';
+            const chTitle = ch.attributes?.title || '';
+            const label = <span>Chapter {num}{chTitle ? ` — ${chTitle}` : ''}</span>;
+            if (!isHosted(ch)) {
+              const url = getExternalUrl(ch);
+              if (!url) return null;
               return (
                 <li key={ch.id}>
-                  <a href={appPath(`/read/${id}/${ch.id}`)}>
-                    <span>Chapter {num}{chTitle ? ` — ${chTitle}` : ''}</span>
-                    <span class="chapter-meta">{group || `${ch.attributes?.pages || 0} pages`}</span>
+                  <a href={url.href} target="_blank" rel="noopener noreferrer">
+                    {label}
+                    <span class="chapter-meta">Official site: {url.hostname} ↗</span>
                   </a>
                 </li>
               );
-            })}
-          </ul>
-        )}
+            }
+            return (
+              <li key={ch.id}>
+                <a href={appPath(`/read/${id}/${ch.id}`)}>
+                  {label}
+                  <span class="chapter-meta">{getGroupName(ch) || `${ch.attributes?.pages || 0} pages`}</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }

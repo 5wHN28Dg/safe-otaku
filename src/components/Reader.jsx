@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { getChapters, getChapterImages, getPageUrl } from '../lib/api.js';
+import { getChapters, getChapterImages, getPageUrl, isHosted } from '../lib/api.js';
 import { navigate, appPath } from '../lib/router.js';
 import { saveReadingPosition, getReadingPosition } from '../lib/db.js';
 
@@ -15,7 +15,8 @@ export function Reader({ mangaId, chapterId }) {
     let cancelled = false;
     getChapters(mangaId)
       .then((list) => {
-        if (!cancelled) setChapterList(list);
+        // Prev/next only steps through chapters this app can show.
+        if (!cancelled) setChapterList(list.filter(isHosted));
       })
       .catch(() => {});
     return () => {

@@ -101,6 +101,18 @@ wget -O- 'http://localhost/cgi-bin/md/api/manga/random'        # 403 Forbidden
 
 Open `http://192.168.1.1/mangadex-safe/` in a browser.
 
+Optional short name, so `http://manga.lan` opens the app:
+
+```
+uci add dhcp domain
+uci set dhcp.@domain[-1].name='manga.lan'
+uci set dhcp.@domain[-1].ip='192.168.1.1'
+uci commit dhcp && /etc/init.d/dnsmasq reload
+sed -i 's|<head>|<head>\n\t\t<script>/* safe-otaku: manga.lan opens the MangaDex safe app */ if (location.hostname === "manga.lan") location.replace("/mangadex-safe/");</script>|' /www/index.html
+```
+
+`/www/index.html` belongs to `luci-base`, and a LuCI upgrade overwrites it. Re-run the `sed` line after upgrading, or use `http://manga.lan/mangadex-safe/` directly. `192.168.1.1` keeps going to LuCI either way.
+
 ## Troubleshooting
 
 **CGI returns 403 for every request.** uhttpd is not passing `PATH_INFO`, so no route matches. Check `/etc/config/uhttpd` for `option cgi_prefix '/cgi-bin'` and reload uhttpd after changes.
@@ -110,6 +122,8 @@ Open `http://192.168.1.1/mangadex-safe/` in a browser.
 **Images return a broken file named `agg.jpg`.** MangaDex serves a placeholder image when a request lacks a valid `User-Agent` or carries a `Via` header. Confirm the CGI sets `User-Agent` and does not forward `Via`. The script already does both; if you edited it, check those lines.
 
 **Pages load slowly, a few at a time.** OpenWrt's stock uhttpd config has `option max_requests 3`, so at most three CGI requests run at once and the rest queue. Raising it lets more images load in parallel, at the cost of more short-lived processes. Measure `free -m` while reading before and after changing it.
+
+**Refused requests show an error instead of "Not available".** uhttpd only honours a CGI `Status:` header written as code plus message (`Status: 403 Forbidden`). A bare `Status: 403` is ignored and the response goes out as 200. `cgi/md` sends the full form; keep it that way if you edit it.
 
 **Rate limiting kicks in.** MangaDex enforces roughly 5 requests per second per IP. The CGI does not throttle locally; if the router's IP is shared, this can be hit by accident. Space out large loads, or add a token bucket to the CGI.
 
@@ -171,6 +185,10 @@ RATINGS="contentRating%5B%5D=safe&contentRating%5B%5D=suggestive"
 MangaDex ratings are `safe`, `suggestive`, `erotica`, and `pornographic`. MangaDex has no Ecchi tag. Uploaders put ecchi titles under `suggestive` or `erotica`, so `suggestive` lets some ecchi through, alongside mainstream titles such as One Piece and Jujutsu Kaisen.
 
 Known residual: someone who already has a cover file name or a chapter image hash from outside this app can fetch that one image through `/img/`. The app itself never hands out names or hashes for titles outside the allowed ratings.
+
+## Licensed series
+
+MangaDex has taken down most officially licensed English translations. For those series (Jujutsu Kaisen, Frieren, SPY×FAMILY, Naruto, Solo Leveling…) it keeps only "external" chapters: links to the publisher's site. The app lists them as "Official site: … ↗" links that open in a new tab with no referrer, and the reader's previous/next skip them. Fan-translated and less mainstream series are mostly hosted and readable in the app. Of the 80 most-followed titles within the allowed ratings on 2026-10-06, 62 had hosted English chapters.
 
 ## What this does not do
 

@@ -43,7 +43,8 @@ export async function getManga(id) {
   return res.data?.[0] || null;
 }
 
-// All English chapters hosted on MangaDex, in reading order.
+// All English chapters in reading order, including "external" ones that MangaDex
+// only links to (licensed series, read on the publisher's site).
 export async function getChapters(mangaId) {
   const chapters = [];
   for (let offset = 0; ; offset += FEED_PAGE) {
@@ -53,7 +54,6 @@ export async function getChapters(mangaId) {
       'translatedLanguage[]': ['en'],
       'order[chapter]': 'asc',
       'includes[]': ['scanlation_group'],
-      includeExternalUrl: 0,
     });
     chapters.push(...(res.data || []));
     if (offset + FEED_PAGE >= res.total) return chapters;
@@ -88,6 +88,22 @@ export function getMangaDescription(manga) {
 export function getAuthorName(manga) {
   const author = manga.relationships?.find((r) => r.type === 'author');
   return author?.attributes?.name || '';
+}
+
+// The publisher URL for a chapter MangaDex does not host, or null. Only http(s).
+export function getExternalUrl(chapter) {
+  const raw = chapter.attributes?.externalUrl;
+  if (!raw) return null;
+  try {
+    const url = new URL(raw);
+    return url.protocol === 'https:' || url.protocol === 'http:' ? url : null;
+  } catch {
+    return null;
+  }
+}
+
+export function isHosted(chapter) {
+  return !chapter.attributes?.externalUrl;
 }
 
 export function getGroupName(chapter) {

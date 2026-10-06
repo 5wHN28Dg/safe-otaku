@@ -69,7 +69,7 @@ Conclusion: no architectural change. Revisit if CGI latency is measured as a pro
 
 **Do not add a build step beyond esbuild.** The build is `esbuild src/index.jsx` (which also compiles JSX) plus a two-file copy. That is the whole pipeline. `--target` declares the browser floor; see the capability matrix.
 
-**Do not add analytics, telemetry, error reporting, or any outbound network call other than to `api.mangadex.org` and `uploads.mangadex.org`.** The CSP meta tag enforces this at the browser level. Do not weaken the CSP to work around it.
+**Do not add analytics, telemetry, error reporting, or any outbound network call other than to `api.mangadex.org` and `uploads.mangadex.org`.** The CSP meta tag enforces this at the browser level. Do not weaken the CSP to work around it. Links to a publisher's site for licensed ("external") chapters are user navigation, not network calls: they open in a new tab with `rel="noopener noreferrer"`, only for `http(s)` URLs, and the CSP is unchanged.
 
 **Do not weaken the allowlists in the CGI.** That covers the endpoint list, the query-key list, the at-home rating check and the image path patterns. The CGI runs as root (uhttpd on OpenWrt does not drop privileges) and proxies to hosts the user does not control. Each new endpoint or key needs evidence that MangaDex applies `contentRating[]` to it.
 
@@ -101,7 +101,7 @@ Confirm `/etc/config/uhttpd` has `option cgi_prefix '/cgi-bin'`. If not, add it 
 
 There is no unit test suite. `npm run dev` runs the real `cgi/md` under BusyBox ash behind a local stand-in for uhttpd, which is enough to develop the frontend and to try CGI changes. It is not uhttpd, so CGI changes still require testing on the router before deploying.
 
-On the router:
+On the router (the CGI must send `Status: 403 Forbidden`; uhttpd ignores a bare `Status: 403` and replies 200):
 
 1. `wget -O- 'http://localhost/cgi-bin/md/api/manga?limit=1'`. Expect JSON with a `data` array.
 2. Filter checks; every one must fail:
