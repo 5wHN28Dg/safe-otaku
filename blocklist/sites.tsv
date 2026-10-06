@@ -1,20 +1,21 @@
 # slug	tier	section	name	evidence	domains (+ = already in Hagezi NSFW at audit time)
 hmvmaniaamv	explicit	amv	HMV Mania	everythingmoe NSFW tag	hmvmania.com
 anichan	explicit	anime	AniChan	verified labels: genre/adult,genre/hentai,genre/smut	anichan.to
-anifyto	explicit	anime	Anify	verified labels: 18+	anify.to animenana.com animetake.tv anime-update.com
+anifyto	general	anime	Anify	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: 18+	anify.to animenana.com animetake.tv anime-update.com
 anikoto	explicit	anime	Anikoto	verified labels: erotica	anikototv.to anichi.to anisuge.tv animesogo.to anixtv.me animixplay.tube animepahetv.to hianimez.org 9animez.org anikai.se anikaitv.to anikoto.bz anikoto.me anikoto.net anikoto.site anikototv.se animekaitv.to animesalt.to animesugetv.bz animesugez.tv animewave.to anisuge.se
 anikotoclones	explicit	anime	Anime Silo	verified labels: adult,erotica,hentai	animesilo.cc all-wish.me anizen.tr gogoanimez.to hianime.ing 9anime.org.lv www.aniverse.sbs yenime.net animesuge.com.in animekai.be moetaku.online yoanime.me babyanime.top animeflixer.com flixeo.tv gogoanimes.me.uk anitaku.com.co aniwatchx.to streamzone1.site
 anikura	explicit	anime	Anikura	verified labels: genres/smut	anikura.club
 AnimeNoSub	explicit	anime	AnimeNoSub	verified labels: adult,erotica,hentai	animenosub.to
 animestreamio	explicit	anime	AniHQ	verified labels: adult,hentai	anihq.cc anihq.to anihq.org
-animeworldin	explicit	anime	AnimeWorld	verified labels: 18+	watchanimeworld.one toonstream.dad hindianimeverse.org animejoker.com animesalt.cx piratexplay.cc www.rareanimes.mov anime-world.to theanimeworld.in anime-world.cc watchanimeworld.in anime-world.app
-animotvslash	explicit	anime	Animotvslash	verified labels: adult	www.animotvslash.org animotvslash.nl animotv.ru animotvslash.org animotvslash.ru
+animeworldin	general	anime	AnimeWorld	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: 18+	watchanimeworld.one toonstream.dad hindianimeverse.org animejoker.com animesalt.cx piratexplay.cc www.rareanimes.mov anime-world.to theanimeworld.in anime-world.cc watchanimeworld.in anime-world.app
+animotvslash	general	anime	Animotvslash	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: adult	www.animotvslash.org animotvslash.nl animotv.ru animotvslash.org animotvslash.ru
 aniwaveclones	explicit	anime	aniwavecomse	verified labels: erotica	aniwave.com.se 9anime.org.ua aniwave.com.es aniwave.fr 9aniwatch.to
-av1please	explicit	anime	AV1 EnCodes	verified labels: genre/hentai	av1please.com av1encodes.com
+av1please	general	anime	AV1 EnCodes	anime encode download site (same as av1encodes); download sites are not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified labels: genre/hentai	av1please.com av1encodes.com
 databasegdriveplayer	explicit	anime	animekai.ro	verified labels: erotica	animekai.ro databasegdriveplayer.co mxplyer2.blogspot.com cdn.api-webs.com megavid.buzz animepahe.ng
 itachitv	explicit	anime	Itachi	verified labels: genre/adult,genre/hentai,genre/smut	itachi.tv anilink.cc
 luffytv	explicit	anime	LuffyTV	verified labels: genre/adult,genre/hentai,genre/smut	luffytv.live luffytv.online
-megaplaysu	explicit	anime	megaplay.su	verified labels: 18+,adult,erotica,hentai	aniwatchtv.com.ro gogoanime.by kissanime.ba hianimetv.su miruro.su miruro.ro kissanime.com.cv gogoanime.ru.com gogoanime.ovh aniwatch.su
+megaplaysu	explicit	anime	megaplay.su	verified labels: 18+,adult,erotica,hentai	aniwatchtv.com.ro gogoanime.by kissanime.ba hianimetv.su kissanime.com.cv gogoanime.ru.com gogoanime.ovh aniwatch.su
+megaplaysu-miruroclones	general	anime	Miruro clones (listed under MegaPlay)	checked 2026-10-03: plain Miruro clones, no hentai/erotica on the page; split from megaplaysu. Anime streaming: ecchi is allowed (owner rule 2026-10-03)	miruro.su miruro.ro
 oceanveilnet	explicit	anime	OceanVeil	licensed but primarily adult catalogue	oceanveil.net
 WCO	explicit	anime	WCO	verified labels: erotica	www.wcostream.tv www.wcostatus.com www.wcoforever.tv www.wco.tv www.wcofun.net www.wcoanimedub.tv www.wcoanimesub.tv www.wcoflix.tv watchcartoononline.cc
 xanime	explicit	anime	Xanime	verified labels: erotica,nsfw	xanime.me xanime.app xanivsrc10.org
@@ -50,16 +51,17 @@ xbooru	explicit	artboard	Xbooru	everythingmoe NSFW tag	+xbooru.com
 yande	explicit	artboard	Yande.re	everythingmoe NSFW tag	+yande.re
 anoboye	explicit	donghua	Anoboye	verified labels: adult,erotica,r-18	anoboye.com zhanime.se zunime.live
 naruldonghua	explicit	donghua	NarulDonghua	verified labels: erotica	naruldonghua.com
-anidl	explicit	download	AniDL	verified labels: genre/adult,genre/hentai,genre/smut	anidl.org
-av1encodes	explicit	download	AV1 EnCodes	verified labels: genre/hentai	av1please.com av1encodes.com av1animes.netlify.app
-bszip	explicit	download	Book Share ZIP	verified labels: adult	bszip.com
-dlrawse	explicit	download	DL-Raw	verified labels: adult,hentai,smut	dl-raw.ac dlraw.me mangazip.co
+anidl	general	download	AniDL	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified labels: genre/adult,genre/hentai,genre/smut	anidl.org
+av1encodes	general	download	AV1 EnCodes	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified labels: genre/hentai	av1please.com av1encodes.com av1animes.netlify.app
+bszip	general	download	Book Share ZIP	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified labels: adult	bszip.com
+dlrawse	general	download	DL-Raw	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified labels: adult,hentai,smut	dl-raw.ac dlraw.me mangazip.co
 erogevn	explicit	download	erogevn.net	everythingmoe NSFW tag	erogevn.net
-nyaasi	explicit	download	Nyaa	sukebei.nyaa.si is the hentai tracker; main site lists ecchi anime	nyaa.si sukebei.nyaa.si nyaa.iss.one nyaa.iss.ink nyaa.land
+nyaasi	general	download	Nyaa	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: main site lists ecchi anime	nyaa.si nyaa.iss.one nyaa.iss.ink nyaa.land
+nyaasi-sukebei	explicit	download	Nyaa Sukebei	hentai-only torrent tracker (split from nyaasi)	sukebei.nyaa.si
 sakuracircle	explicit	download	SakuraCircle	everythingmoe NSFW tag	+sakuracircle.com
-sdtoons	explicit	download	SD Toons	verified labels: erotica,hentai,nsfw	sdtoons.com
-asianctvco	explicit	drama	Asianc TV	verified labels: erotica	asianc.id drama123.tv hidrama.to asianctv.net asianctv.co asianctv.cc dramacools9.cam
-kissoppa	explicit	drama	KissOppa	homepage title advertises Vivamax (erotic films)	dramacool.asia www.kissoppa.com freshdrama.net kisskh.org
+sdtoons	general	download	SD Toons	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified labels: erotica,hentai,nsfw	sdtoons.com
+asianctvco	general	drama	Asianc TV	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified labels: erotica	asianc.id drama123.tv hidrama.to asianctv.net asianctv.co asianctv.cc dramacools9.cam
+kissoppa	general	drama	KissOppa	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: homepage title advertises Vivamax (erotic films)	dramacool.asia www.kissoppa.com freshdrama.net kisskh.org
 4ch	explicit	forums	4ch/a/	4chan boards domain (4chan.org already blocked)	boards.4channel.org
 ulmforg	explicit	forums	ULMF	everythingmoe NSFW tag	+ulmf.org
 cpgrepacks	explicit	game	CPG Repacks	everythingmoe NSFW tag	+cpgrepacks.site
@@ -269,122 +271,122 @@ xnovel	explicit	novel	Xnovel	verified labels: adult,smut	xnovel.me xnovel.app
 doujinshiinfo	explicit	tracker	Doujinshi.info	doujinshi DB with covers	www.doujinshi.info
 doujinshiwiki	explicit	tracker	Doujinshi.wiki	doujinshi DB; alt domain sukebei.nyaa.si	doujinshi.wiki sukebei.nyaa.si
 hentaitagsearch	explicit	wiki	Tag Search Blogs	e-hentai tag search	e-hentaitagsearch.blogspot.com hitomitagsearch.blogspot.com nhentaitagsearch.blogspot.com
-trueharemcarrd	explicit	wiki	TrueHarem	homepage nsfw labels x46	trueharem.carrd.co multiending.carrd.co
-123animes	ecchi	anime	aniwaves.ru	verified labels: ecchi	aniwaves.ru lite.aniwaves.ru 123animehub.cc 123anime.la animixplay.la hianimes.ru guts.to 123animes.ru zorotv.cc okarun.moe kissanimefree.cc w1.zoro.se 9anime.cc animixplay.st animixplay.name animecool.xyz aniwave.se animet.to hlsx3cdn.burntburst45.store echovideo.ru
-2dhive	ecchi	anime	2Dhive	verified labels: ecchi	2dhive.com babastream.top
-4animo	ecchi	anime	Animo	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	4animo.xyz zangetsu.cc
-AllAnime	ecchi	anime	MKissa	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	mkissa.to +allmanga.to
-aniclipse	ecchi	anime	AniClipse	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	aniclipse.com anikoto.cx vidhawk.buzz
-anicore	ecchi	anime	Anikage	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anikage.cc anicore.tv
-anidap	ecchi	anime	Anidap	verified labels: ecchi	anidap.lol
-anigum	ecchi	anime	StreamX	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	streamex.sh anicine.xyz anidoor.me anigum.com
-anikuro	ecchi	anime	Anikuro	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anikuro.ru anikuro.to anikuro.site
-anilight	ecchi	anime	AniLight	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anilight.live
-animedekho	ecchi	anime	AnimeDekho	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animedekho.app animoye.com toono.in tooniboy.com multishows.fun animahd.com animedekho.com animedekho.net animedekho.co
-animedex	ecchi	anime	AnimeDex	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animedex.fun
-animedunya	ecchi	anime	Anime-Dunya	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anime-dunya.com
-animegers	ecchi	anime	Animegers	verified labels: genre/ecchi	animegers.com
-ANIMEGG	ecchi	anime	ANIMEGG	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.animegg.org
-AnimeHeaven	ecchi	anime	AnimeHeaven	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animeheaven.me
-animekizz	ecchi	anime	AnimeKizz	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animekizz.live
-animeloads	ecchi	anime	Anime-Loads	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.anime-loads.org
-animenexus	ecchi	anime	Anime Nexus	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anime.nexus animenexus.tv
-AnimeOnsen	ecchi	anime	AnimeOnsen	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.animeonsen.xyz v3-dev.animeonsen.xyz
-animepahe	ecchi	anime	animepahe	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animepahe.pw animepahe.com animepahe.org animepahe.ru animepahe.si owocdn.top
-AnimeParadise	ecchi	anime	AnimeParadise	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.animeparadise.moe
-animesheaven	ecchi	anime	Animeya	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.animeya.cc anighar.cloud
-animetvplus	ecchi	anime	animeTVplus	verified labels: ecchi	animetvplus.xyz
-animeyubi	ecchi	anime	Animeyubi	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animeyubi.com
-anipm	ecchi	anime	ani.pm	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	+ani.pm
-anisnatch	ecchi	anime	AniSnatch	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anisnatch.to anisnatch.top anisnatch.site
-anistream	ecchi	anime	Anistream	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anistream.one
-AniWorld	ecchi	anime	AniWorld	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	aniworld.to aniworld.domains
-anixo	ecchi	anime	AniXo	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anixo.online
-anizone	ecchi	anime	AniZone	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anizone.to
-bettermelon	ecchi	anime	bettermelon	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	bettermelon.ru
-enmalol	ecchi	anime	Enma	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.enma.lol www.anipub.xyz aniwatch.fit hianimes.cz
-fireanime	ecchi	anime	FireAnime	verified labels: ecchi	fireani.me
-gotaku	ecchi	anime	Gotaku	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	gotaku.to
-just4anime	ecchi	anime	Just4Anime	verified labels: ecchi	just4anime.online
-justanime	ecchi	anime	JustAnime	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.justanime.to www.justanime.site justanime.fun
-kaizokusite	ecchi	anime	Kaizoku Anime	verified labels: ecchi	anime.kaizoku.site
-kaorii	ecchi	anime	Kaori	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	kaorii.app
-kawaiianime	ecchi	anime	Kawaii Anime	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	kawaii-anime.com
-kayoanimetv	ecchi	anime	Kayoanimetv	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animixplay.fun kayoanimetv.com animixplay.best
-kazora	ecchi	anime	Kazora	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	kazora.cc
-KickAssAnime	ecchi	anime	KickAssAnime	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	kaa.lt kaa.to kickassanime.cx kaa.rs kaa.mx kickassanime.mx kickassanimes.ru kaas.ro kaas.to watchanime.io kickass-anime.ro kickass-anime.ru krussdomi.com
-kimoitv	ecchi	anime	KimoiTV	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	kimoitv.com
-kisskhanime	ecchi	anime	Kisskh	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	kisskh.co kisskh.la
-kyren	ecchi	anime	Kyren	verified labels: ecchi	kyren.moe
-last1234	ecchi	anime	AniLast	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	last1234.fun
-lunaranime	ecchi	anime	Lunar	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	lunarx.to lunaranime.ru
-lunastream	ecchi	anime	Luna	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	luna-stream.me
-meguanime	ecchi	anime	MeguAnimes	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	meguanime.com meguanime.org meguanime.net anisakura.xyz
-miruro	ecchi	anime	Miruro	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.miruro.to www.miruro.ru www.miruro.bz www.miruro.tv www.miruro.com www.miruro.online www.animeyee.lol animeuwutv.com
-nekowatch	ecchi	anime	NekoWatch	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	nekowatch.xyz
-onianime	ecchi	anime	Onianime	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	onianime.eu
-otakustreamers	ecchi	anime	Otaku-Streamers	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	otaku-streamers.com beta.otaku-streamers.com
-otakutsu	ecchi	anime	Otakutsu	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	otakutsu.cc
-otakuu	ecchi	anime	AnimeX	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animex.one aniwave.at anistream.one
-pimpanime	ecchi	anime	PimpAnime	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	pimpanime.nl
-ramenflix	ecchi	anime	RamenFlix	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	ramenflix.com www.animerealm.in shonen.to manga.ramenflix.com
-reanime	ecchi	anime	Re:Anime	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	reanime.to reanime.cz reanime.wtf reindex.to stronghole.site
-sankanime	ecchi	anime	Sankanime	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	sankanime.web.id
-senshi	ecchi	anime	Senshi	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	senshi.to ninstream.com
-shiro	ecchi	anime	Shiro	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	shiro.so
-uniquestream	ecchi	anime	AnimeStream	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anime.uniquestream.net
-watchanimez	ecchi	anime	WatchAnimeX	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	watchanimez.me
-yomito	ecchi	anime	Yomi	verified labels: ecchi	yomi.to anime.streamxtv.tech animotvslash.ru tsukuyomi.tv anixx.fun senpaiflix.fun aniwatch.cx www.cihuynime.net tenzora.top gojolive.site
-Youtube	ecchi	anime	YouTube	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	
-zenkai	ecchi	anime	Zenkai	unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	zenkai.to kototv.to hianime.help cdn.animesuge.pm player.anix.pm player.anikai.rest
+trueharemcarrd	review	wiki	TrueHarem	information list of harem titles (covers and tags, no media); databases like MAL are not blocked (owner rule 2026-10-06)	trueharem.carrd.co multiending.carrd.co
+123animes	general	anime	aniwaves.ru	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: ecchi	aniwaves.ru lite.aniwaves.ru 123animehub.cc 123anime.la animixplay.la hianimes.ru guts.to 123animes.ru zorotv.cc okarun.moe kissanimefree.cc w1.zoro.se 9anime.cc animixplay.st animixplay.name animecool.xyz aniwave.se animet.to hlsx3cdn.burntburst45.store echovideo.ru
+2dhive	general	anime	2Dhive	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: ecchi	2dhive.com babastream.top
+4animo	general	anime	Animo	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	4animo.xyz zangetsu.cc
+AllAnime	general	anime	MKissa	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	mkissa.to +allmanga.to
+aniclipse	general	anime	AniClipse	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	aniclipse.com anikoto.cx vidhawk.buzz
+anicore	general	anime	Anikage	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anikage.cc anicore.tv
+anidap	general	anime	Anidap	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: ecchi	anidap.lol
+anigum	general	anime	StreamX	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	streamex.sh anicine.xyz anidoor.me anigum.com
+anikuro	general	anime	Anikuro	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anikuro.ru anikuro.to anikuro.site
+anilight	general	anime	AniLight	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anilight.live
+animedekho	general	anime	AnimeDekho	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animedekho.app animoye.com toono.in tooniboy.com multishows.fun animahd.com animedekho.com animedekho.net animedekho.co
+animedex	general	anime	AnimeDex	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animedex.fun
+animedunya	general	anime	Anime-Dunya	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anime-dunya.com
+animegers	general	anime	Animegers	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: genre/ecchi	animegers.com
+ANIMEGG	general	anime	ANIMEGG	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.animegg.org
+AnimeHeaven	general	anime	AnimeHeaven	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animeheaven.me
+animekizz	general	anime	AnimeKizz	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animekizz.live
+animeloads	general	anime	Anime-Loads	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.anime-loads.org
+animenexus	general	anime	Anime Nexus	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anime.nexus animenexus.tv
+AnimeOnsen	general	anime	AnimeOnsen	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.animeonsen.xyz v3-dev.animeonsen.xyz
+animepahe	general	anime	animepahe	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animepahe.pw animepahe.com animepahe.org animepahe.ru animepahe.si owocdn.top
+AnimeParadise	general	anime	AnimeParadise	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.animeparadise.moe
+animesheaven	general	anime	Animeya	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.animeya.cc anighar.cloud
+animetvplus	general	anime	animeTVplus	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: ecchi	animetvplus.xyz
+animeyubi	general	anime	Animeyubi	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animeyubi.com
+anipm	general	anime	ani.pm	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	+ani.pm
+anisnatch	general	anime	AniSnatch	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anisnatch.to anisnatch.top anisnatch.site
+anistream	general	anime	Anistream	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anistream.one
+AniWorld	general	anime	AniWorld	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	aniworld.to aniworld.domains
+anixo	general	anime	AniXo	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anixo.online
+anizone	general	anime	AniZone	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anizone.to
+bettermelon	general	anime	bettermelon	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	bettermelon.ru
+enmalol	general	anime	Enma	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.enma.lol www.anipub.xyz aniwatch.fit hianimes.cz
+fireanime	general	anime	FireAnime	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: ecchi	fireani.me
+gotaku	general	anime	Gotaku	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	gotaku.to
+just4anime	general	anime	Just4Anime	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: ecchi	just4anime.online
+justanime	general	anime	JustAnime	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.justanime.to www.justanime.site justanime.fun
+kaizokusite	general	anime	Kaizoku Anime	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: ecchi	anime.kaizoku.site
+kaorii	general	anime	Kaori	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	kaorii.app
+kawaiianime	general	anime	Kawaii Anime	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	kawaii-anime.com
+kayoanimetv	general	anime	Kayoanimetv	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animixplay.fun kayoanimetv.com animixplay.best
+kazora	general	anime	Kazora	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	kazora.cc
+KickAssAnime	general	anime	KickAssAnime	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	kaa.lt kaa.to kickassanime.cx kaa.rs kaa.mx kickassanime.mx kickassanimes.ru kaas.ro kaas.to watchanime.io kickass-anime.ro kickass-anime.ru krussdomi.com
+kimoitv	general	anime	KimoiTV	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	kimoitv.com
+kisskhanime	general	anime	Kisskh	same site as kisskh (general Asian drama/movie piracy); not blocked for incidental NSFW (owner rule 2026-10-02)	kisskh.co kisskh.la
+kyren	general	anime	Kyren	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: ecchi	kyren.moe
+last1234	general	anime	AniLast	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	last1234.fun anilast.xyz
+lunaranime	general	anime	Lunar	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	lunarx.to lunaranime.ru
+lunastream	general	anime	Luna	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	luna-stream.me
+meguanime	general	anime	MeguAnimes	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	meguanime.com meguanime.org meguanime.net anisakura.xyz
+miruro	general	anime	Miruro	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	www.miruro.to www.miruro.ru www.miruro.bz www.miruro.tv www.miruro.com www.miruro.online www.animeyee.lol animeuwutv.com
+nekowatch	general	anime	NekoWatch	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	nekowatch.xyz
+onianime	general	anime	Onianime	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	onianime.eu
+otakustreamers	general	anime	Otaku-Streamers	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	otaku-streamers.com beta.otaku-streamers.com
+otakutsu	general	anime	Otakutsu	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	otakutsu.cc
+otakuu	general	anime	AnimeX	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	animex.one aniwave.at anistream.one
+pimpanime	general	anime	PimpAnime	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	pimpanime.nl
+ramenflix	general	anime	RamenFlix	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	ramenflix.com www.animerealm.in shonen.to manga.ramenflix.com
+reanime	general	anime	Re:Anime	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	reanime.to reanime.cz reanime.wtf reindex.to stronghole.site
+sankanime	general	anime	Sankanime	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	sankanime.web.id
+senshi	general	anime	Senshi	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	senshi.to ninstream.com
+shiro	general	anime	Shiro	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	shiro.so
+uniquestream	general	anime	AnimeStream	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	anime.uniquestream.net
+watchanimez	general	anime	WatchAnimeX	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	watchanimez.me
+yomito	general	anime	Yomi	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: ecchi	yomi.to anime.streamxtv.tech animotvslash.ru tsukuyomi.tv anixx.fun senpaiflix.fun aniwatch.cx www.cihuynime.net tenzora.top gojolive.site sakusaku.to
+Youtube	general	anime	YouTube	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	
+zenkai	general	anime	Zenkai	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue anime source (inferred: catalogue includes ecchi titles)	zenkai.to kototv.to hianime.help cdn.animesuge.pm player.anix.pm player.anikai.rest
 mikubooru	ecchi	artboard	Mikubooru	booru instance (inferred)	booru.funmaker.moe
 minitokyo	ecchi	artboard	Minitokyo	wallpaper/scan board (inferred)	www.minitokyo.net
 safebooru	ecchi	artboard	Safebooru	verified: API returns rating:questionable posts	safebooru.org
 tsundora	ecchi	artboard	Tsundora	wallpaper board (inferred)	tsundora.com tsundora-com.translate.goog
 dokidokicos	ecchi	cosplay	DokiDoki Cosplay	homepage explicit/xxx labels (lingerie line)	dokidokicos.com
 moeflavor	ecchi	cosplay	MoeFlavor	anime lingerie store	moeflavor.com intl.moeflavor.com
-anime4i	ecchi	donghua	Anime4i	unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	anime4i.com
-animecube	ecchi	donghua	Anime Cube	unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	animecube.live
-animekhor	ecchi	donghua	AnimeKhor	verified labels: mature	animekhor.org
-AnimeXin	ecchi	donghua	AnimeXin	unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	animexin.dev
-chikianimation	ecchi	donghua	ChikiAnimation	verified labels: ecchi,mature	chikianimation.online chikianimation.com chikianimations.xyz
-cksub	ecchi	donghua	Donghua4K	unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	donghua4k.net cksub.org
-donghuasite	ecchi	donghua	donghua.site	unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	donghua.site
-donghuastream	ecchi	donghua	DonghuaStream	unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	donghuastream.org
-donghuaworld	ecchi	donghua	DonghuaWorld	unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	donghuaworld.com
-dongstream	ecchi	donghua	Dongstream	unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	dongstream.com
-hdonghua	ecchi	donghua	HDonghua	unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	h-donghua.com h-donghua.xyz
-LManime	ecchi	donghua	LManime	unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	lmanime.com
-luciferdonghua	ecchi	donghua	LuciferDonghua	unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	luciferdonghua.org luciferdonghua.in www.luciferanimes.com luciferdonghua.one misterdonghua.com
-myanimelive	ecchi	donghua	Myanime.live	unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	myanime.live
-mydonghua	ecchi	donghua	MyDonghua	unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	mydonghua.com www.reeak.com
-wowtopix	ecchi	donghua	WowTopix	unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	wowtopix.com
-amenzb	ecchi	download	ameNZB	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	amenzb.moe
-animekaizoku	ecchi	download	AnimeKaizoku	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	www.animekaizoku.xyz
-animeout	ecchi	download	AnimeOut	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	animewat.ch www.animeout.xyz
-animesakura	ecchi	download	AnimeToki	verified labels: ecchi	animetoki.com piece.metaanimesh.workers.dev
-animetimecc	ecchi	download	Anime Time	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	animetime.cc
-animetosho	ecchi	download	AnimeTosho	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	animetosho.net animetosho.org
-aninzb	ecchi	download	aninzb	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	aninzb.moe
-anirena	ecchi	download	AniRena	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	www.anirena.com
-asiamediablog	ecchi	download	Asia Media Blog	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	asiamediablog.com
-bangumimoe	ecchi	download	Bangumi.moe	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	bangumi.moe
-chauthanh	ecchi	download	chauthanh	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	chauthanh.info
-coolsanime	ecchi	download	CoolsAnime	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	coolsanime.fans coolsanime.site
-dkb	ecchi	download	DKB	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	www.dkb.si dkb.si
-dlraw	ecchi	download	DLRaw	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	+dlraw.to manga-zip.tv manga-zip.app +13dl.me
-dlzip	ecchi	download	DL-Zip	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	dl-zip.com www.zip-rar.com
-hi10anime	ecchi	download	Hi10Anime	verified labels: ecchi	hi10anime.com
-kanime	ecchi	download	K-Anime	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	k-anime.zone.id
-kayoanime	ecchi	download	KayoAnime	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	kayoanime.com
-mangazip	ecchi	download	MangaZip	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	manga-zip.is
-nekobt	ecchi	download	nekoBT	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	nekobt.to
-otakuness	ecchi	download	Otakuness	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	otakuness.top
-pandabackup	ecchi	download	Panda Backup	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	+panda.chaika.moe
-subsplease	ecchi	download	SubsPlease	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	subsplease.org
-tokyoinsider	ecchi	download	TokyoInsider	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	tokyoinsider.com www.tokyoinsider.com
-toonworld4all	ecchi	download	toonworld4all	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	toonworld4all.me
-tsukihime	ecchi	download	TsukiHime	unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	tsukihime.org
+anime4i	general	donghua	Anime4i	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	anime4i.com
+animecube	general	donghua	Anime Cube	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	animecube.live
+animekhor	general	donghua	AnimeKhor	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: mature	animekhor.org
+AnimeXin	general	donghua	AnimeXin	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	animexin.dev
+chikianimation	general	donghua	ChikiAnimation	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: verified labels: ecchi,mature	chikianimation.online chikianimation.com chikianimations.xyz
+cksub	general	donghua	Donghua4K	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	donghua4k.net cksub.org
+donghuasite	general	donghua	donghua.site	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	donghua.site
+donghuastream	general	donghua	DonghuaStream	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	donghuastream.org
+donghuaworld	general	donghua	DonghuaWorld	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	donghuaworld.com
+dongstream	general	donghua	Dongstream	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	dongstream.com
+hdonghua	general	donghua	HDonghua	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	h-donghua.com h-donghua.xyz
+LManime	general	donghua	LManime	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	lmanime.com
+luciferdonghua	general	donghua	LuciferDonghua	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	luciferdonghua.org luciferdonghua.in www.luciferanimes.com luciferdonghua.one misterdonghua.com
+myanimelive	general	donghua	Myanime.live	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	myanime.live
+mydonghua	general	donghua	MyDonghua	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	mydonghua.com www.reeak.com
+wowtopix	general	donghua	WowTopix	anime streaming: ecchi is allowed, only hentai/explicit content is blocked (owner rule 2026-10-03). Was: unofficial full-catalogue donghua source (inferred: catalogue includes ecchi titles)	wowtopix.com
+amenzb	general	download	ameNZB	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	amenzb.moe
+animekaizoku	general	download	AnimeKaizoku	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	www.animekaizoku.xyz
+animeout	general	download	AnimeOut	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	animewat.ch www.animeout.xyz
+animesakura	general	download	AnimeToki	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified labels: ecchi	animetoki.com piece.metaanimesh.workers.dev
+animetimecc	general	download	Anime Time	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	animetime.cc
+animetosho	general	download	AnimeTosho	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	animetosho.net animetosho.org
+aninzb	general	download	aninzb	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	aninzb.moe
+anirena	general	download	AniRena	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	www.anirena.com
+asiamediablog	general	download	Asia Media Blog	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	asiamediablog.com
+bangumimoe	general	download	Bangumi.moe	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	bangumi.moe
+chauthanh	general	download	chauthanh	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	chauthanh.info
+coolsanime	general	download	CoolsAnime	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	coolsanime.fans coolsanime.site
+dkb	general	download	DKB	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	www.dkb.si dkb.si
+dlraw	general	download	DLRaw	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	+dlraw.to manga-zip.tv manga-zip.app +13dl.me
+dlzip	general	download	DL-Zip	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	dl-zip.com www.zip-rar.com
+hi10anime	general	download	Hi10Anime	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified labels: ecchi	hi10anime.com
+kanime	general	download	K-Anime	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	k-anime.zone.id
+kayoanime	general	download	KayoAnime	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	kayoanime.com
+mangazip	general	download	MangaZip	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	manga-zip.is
+nekobt	general	download	nekoBT	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	nekobt.to
+otakuness	general	download	Otakuness	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	otakuness.top
+pandabackup	general	download	Panda Backup	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	+panda.chaika.moe
+subsplease	general	download	SubsPlease	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	subsplease.org
+tokyoinsider	general	download	TokyoInsider	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	tokyoinsider.com www.tokyoinsider.com
+toonworld4all	general	download	toonworld4all	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	toonworld4all.me
+tsukihime	general	download	TsukiHime	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue download source (inferred: catalogue includes ecchi titles)	tsukihime.org
 hikari3	ecchi	forums	hikari3.ch	anonymous imageboard, unmoderated uploads (inferred)	hikari3.ch
 wapchan	ecchi	forums	Wapchan	anonymous imageboard (inferred)	wapchan.org
 allmanga	ecchi	manga	MKissa Manga	unofficial full-catalogue manga source (inferred: catalogue includes ecchi titles)	mkissa.to +allmanga.to
@@ -439,11 +441,11 @@ twmanga	ecchi	manga	Twmanga	unofficial full-catalogue manga source (inferred: ca
 welomaraw	ecchi	manga	WeLoMa	unofficial full-catalogue manga source (inferred: catalogue includes ecchi titles)	weloma.art
 yaoiscan	ecchi	manga	Yaoiscan	unofficial full-catalogue manga source (inferred: catalogue includes ecchi titles)	yaoiscan.com
 asuragg	ecchi	manhwa	Asura Scans	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	asurascans.com beta.asurascans.com toraka.com
-blacktoon	ecchi	manhwa	Blacktoon	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	blacktoon.cc blacktoon422.com blacktoonurl.net xn--ij2bx6jk1s.co
+blacktoon	ecchi	manhwa	Blacktoon	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	blacktoon.cc blacktoon422.com blacktoonurl.net xn--ij2bx6jk1s.co blacktoon423.com url.blacktoon.cafe
 erosscans	ecchi	manhwa	ErosScan	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	erosscans.xyz
 flamescans	ecchi	manhwa	Flame Comics	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	flamecomics.xyz
-funbe512	ecchi	manhwa	Funbe	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	funbe674.com
-goodtoon	ecchi	manhwa	GoodToon	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	goodtoon.top www.goodtoon004.com
+funbe512	ecchi	manhwa	Funbe	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	funbe674.com funbe678.com
+goodtoon	ecchi	manhwa	GoodToon	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	goodtoon.top www.goodtoon004.com www.goodtoon005.com
 hivescans	ecchi	manhwa	Hive Scans	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	hivescans.com
 jjaptoon	ecchi	manhwa	jjaptoon	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	jjaptoon008.com xn--kd6b44m.live
 kuramanga	ecchi	manhwa	KuraManga	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	+kuramanga.com
@@ -456,7 +458,7 @@ nicelink22	ecchi	manhwa	nicelink	unofficial full-catalogue manhwa source (inferr
 plutoscans	ecchi	manhwa	Flame Scans	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	flamescans.lol
 rokaricomics	ecchi	manhwa	rokari comics	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	rokaricomics.com
 templescan	ecchi	manhwa	TempleScan	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	templescan.net
-toonflix	ecchi	manhwa	TOONFLIX (ntk01)	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	newtoki1.org sbxh9.com toki31.com marumaru100.com toonflix.app +ntk01.com xn--h10b90bby9a7jkc4f.com
+toonflix	ecchi	manhwa	TOONFLIX (ntk01)	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	newtoki1.org sbxh9.com toki31.com marumaru100.com toonflix.app +ntk01.com xn--h10b90bby9a7jkc4f.com toki32.com
 toonily	ecchi	manhwa	Toonily	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	+toonily.com
 toonkor	ecchi	manhwa	ToonKor	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	xn--yq5bv6mzmcca.org tkor140.com korsite.net
 topmanhua	ecchi	manhwa	TopManhua	unofficial full-catalogue manhwa source (inferred: catalogue includes ecchi titles)	+manhuatop.org
@@ -498,7 +500,7 @@ wuxiaclick	ecchi	novel	WuxiaClick	verified labels: mature	wuxia.click readnovel.
 wuxiadreams	ecchi	novel	Wuxia Dreams	unofficial full-catalogue novel source (inferred: catalogue includes ecchi titles)	wuxiadreams.com
 wuxiap	ecchi	novel	Wuxia Box	unofficial full-catalogue novel source (inferred: catalogue includes ecchi titles)	www.wuxiabox.com www.fanmtl.com www.wuxiaspot.com www.wuxiafox.com www.wuxiaone.com www.ltnovels.com www.fannovels.org www.wuxiaspace.com
 wuxiaworld	ecchi	novel	Wuxiaworld.site	unofficial full-catalogue novel source (inferred: catalogue includes ecchi titles)	wuxiaworld.site
-erogemusicquiz	ecchi	quiz	ErogeMusicQuiz	eroge quiz with eroge art	erogemusicquiz.com
+erogemusicquiz	review	quiz	ErogeMusicQuiz	music guessing game about visual-novel soundtracks (audio, no NSFW media); info/quiz sites are not blocked (owner rule 2026-10-06)	erogemusicquiz.com
 absoluteterritory	ecchi	tracker	Absolute Territory	zettai ryouiki (thigh) fanservice database	absoluteterritory.moe
 aidoku	apps	apps	Aidoku	app/extension distribution; content comes from source sites	aidoku.app aidoku-community.github.io
 akuse	apps	apps	akuse	app/extension distribution; content comes from source sites	
@@ -610,24 +612,24 @@ vnclubdb	review	database	VN Club	database/tracker; shows ecchi cover art, adult 
 vndbwiki	review	database	Visual Novel DB	database/tracker; shows ecchi cover art, adult entries hidden by account setting	vndb.org daniel-c-j.github.io
 cdjapan	review	download	CDJapan	store; sells adult items behind age click-through	www.cdjapan.co.jp
 neokyo	review	download	Neokyo	store; sells adult items behind age click-through	neokyo.com
-1mindrama	review	drama	1Min Drama	general film/drama piracy; R-rated titles (inferred)	1mindrama.net
-animeloadsdrama	review	drama	Anime-Loads	general film/drama piracy; R-rated titles (inferred)	www.anime-loads.org
-asiaflix	review	drama	Asiaflix	general film/drama piracy; R-rated titles (inferred)	asiaflix.net asiaflix.in kisskh.or.at asiaflix.live
-asianview	review	drama	Kisskh.club	general film/drama piracy; R-rated titles (inferred)	kisskh.club kissasia.me asianview.co
-dramaday	review	drama	Dramaday	general film/drama piracy; R-rated titles (inferred)	dramaday.me
-dramanicee	review	drama	Dramanicee.cl	general film/drama piracy; R-rated titles (inferred)	dramanice.cl dramanice.boo
-goplay	review	drama	GoPlay	general film/drama piracy; R-rated titles (inferred)	goplay.su goplay.ml goplay.anontpp.com
+1mindrama	general	drama	1Min Drama	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: piracy, but no NSFW evidence found (2026-10-01: genre pages, The Handmaiden search, TMDB check); not blocked	1mindrama.net
+animeloadsdrama	general	drama	Anime-Loads	drama section of anime-loads.org; the domain stays blocked through the anime row (animeloads: ecchi)	www.anime-loads.org
+asiaflix	general	drama	Asiaflix	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified: lists The Handmaiden (2016, explicit sex scenes)	asiaflix.net asiaflix.in kisskh.or.at asiaflix.live
+asianview	general	drama	Kisskh.club	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: inferred: catalogue comes from TMDB (themoviedb references in the page/app code), which lists R-rated films	kisskh.club kissasia.me asianview.co
+dramaday	general	drama	Dramaday	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: piracy, but no NSFW evidence found (2026-10-01: genre pages, The Handmaiden search, TMDB check); not blocked	dramaday.me
+dramanicee	general	drama	Dramanicee.cl	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified: lists Filipino "sexy" films (Pinoy Sexy Classics)	dramanice.cl dramanice.boo
+goplay	general	drama	GoPlay	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: piracy, but no NSFW evidence found (2026-10-01: genre pages, The Handmaiden search, TMDB check); not blocked	goplay.su goplay.ml goplay.anontpp.com
 iqiyi	review	drama	iQIYI	licensed/mainstream; mature content only behind account settings	www.iq.com
-katdrama	review	drama	Kat Drama	general film/drama piracy; R-rated titles (inferred)	k-drama.in
-kdramaweb	review	drama	Kdramaweb	general film/drama piracy; R-rated titles (inferred)	dramacooli.buzz dramahood.mom dramacoolr.buzz asianctv.fun dramacool.net.lc dramacool.com.tr dramacooli.li dramacoolstar.com kdramaweb.com watchasiann.de kstardrama.com runasian.org
-kissasiacam	review	drama	kissasia.cam	general film/drama piracy; R-rated titles (inferred)	kissasia.cam kisskh.org
-kissasiantv	review	drama	Kissasiantv	general film/drama piracy; R-rated titles (inferred)	kissasian.com.lv kissasian.video kissasiantv.cx kissasian.org.vc
-kisskh	review	drama	Kisskh	general film/drama piracy; R-rated titles (inferred)	kisskh.co kisskh.la kisskh.id kisskh.is kisskh.do kisskh.ovh kiskh.com kisskh.nl
-kshow123	review	drama	Kshow123	general film/drama piracy; R-rated titles (inferred)	kshow123.tv
-mkvdramame	review	drama	MkvDrama.net	general film/drama piracy; R-rated titles (inferred)	mkvdrama.net mkvdrama.me dramiko.com
-myasiantv	review	drama	Myasiantv	general film/drama piracy; R-rated titles (inferred)	myasiantv.rest myasiantv.com.bz myasiantv.com.lv www.kisskhweb.com dramanice.cyou kissasiantv.my kisskh.space dramika.com dramamoly.com myasiantv.ac
-onetouchtv	review	drama	OneTouchTV	general film/drama piracy; R-rated titles (inferred)	onetouchtv.xyz onetouchtv.info
-onlykdrama	review	drama	OnlyKDrama	general film/drama piracy; R-rated titles (inferred)	onlykdrama.top onlykdrama.shop
+katdrama	general	drama	Kat Drama	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: inferred: catalogue comes from TMDB (themoviedb references in the page/app code), which lists R-rated films	k-drama.in
+kdramaweb	general	drama	Kdramaweb	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: piracy, but no NSFW evidence found (2026-10-01: genre pages, The Handmaiden search, TMDB check); not blocked	dramacooli.buzz dramahood.mom dramacoolr.buzz asianctv.fun dramacool.net.lc dramacool.com.tr dramacooli.li dramacoolstar.com kdramaweb.com watchasiann.de kstardrama.com runasian.org
+kissasiacam	general	drama	kissasia.cam	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: inferred: catalogue comes from TMDB (themoviedb references in the page/app code), which lists R-rated films	kissasia.cam kisskh.org
+kissasiantv	general	drama	Kissasiantv	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: piracy, but no NSFW evidence found (2026-10-01: genre pages, The Handmaiden search, TMDB check); not blocked	kissasian.com.lv kissasian.video kissasiantv.cx kissasian.org.vc
+kisskh	general	drama	Kisskh	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: extension maintainers label it NSFW (Aniyomi and Mangayomi: KissKH)	kisskh.co kisskh.la kisskh.id kisskh.is kisskh.do kisskh.ovh kiskh.com kisskh.nl
+kshow123	general	drama	Kshow123	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: piracy, but no NSFW evidence found (2026-10-01: genre pages, The Handmaiden search, TMDB check); not blocked	kshow123.tv
+mkvdramame	general	drama	MkvDrama.net	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: piracy, but no NSFW evidence found (2026-10-01: genre pages, The Handmaiden search, TMDB check); not blocked	mkvdrama.net mkvdrama.me dramiko.com
+myasiantv	general	drama	Myasiantv	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified: lists Filipino "sexy" films (Pinoy Sexy Classics, Sex Drive)	myasiantv.rest myasiantv.com.bz myasiantv.com.lv www.kisskhweb.com dramanice.cyou kissasiantv.my kisskh.space dramika.com dramamoly.com myasiantv.ac
+onetouchtv	general	drama	OneTouchTV	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: piracy, but no NSFW evidence found (2026-10-01: genre pages, The Handmaiden search, TMDB check); not blocked	onetouchtv.xyz onetouchtv.info
+onlykdrama	general	drama	OnlyKDrama	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: inferred: catalogue comes from TMDB (themoviedb references in the page/app code), which lists R-rated films	onlykdrama.top onlykdrama.shop
 vikicom	review	drama	Rakuten Viki	licensed/mainstream; mature content only behind account settings	www.viki.com
 wetv	review	drama	WeTV	licensed/mainstream; mature content only behind account settings	wetv.vip www.iflix.com
 anidbforum	review	forums	AniDB Forum	database/tracker; shows ecchi cover art, adult entries hidden by account setting	anidb.net
@@ -650,7 +652,7 @@ kagane	review	manhwa	Kagane	licensed/mainstream; mature content only behind acco
 manta	review	manhwa	Manta	licensed/mainstream; mature content only behind account settings	manta.net
 tapas	review	manhwa	Tapas	licensed/mainstream; mature content only behind account settings	tapas.io
 webtoon	review	manhwa	Webtoons	licensed/mainstream; mature content only behind account settings	webtoons.com
-annasarchive	review	novel	Anna's Archive	licensed/mainstream; mature content only behind account settings	annas-archive.gl annas-archive.pk annas-archive.gd
+annasarchive	library	novel	Anna's Archive	public preservation library; never blocked (owner rule 2026-10-02)	annas-archive.gl annas-archive.pk annas-archive.gd
 bookwalker2	review	novel	Bookwalker	licensed/mainstream; mature content only behind account settings	bookwalker.com bookwalker.jp global.bookwalker.jp
 jnovelclub	review	novel	J-Novel Club	licensed/mainstream; mature content only behind account settings	j-novel.club
 jpbookstoreln	review	novel	JP Book Store	licensed/mainstream; mature content only behind account settings	jpbookstore.com
@@ -672,17 +674,17 @@ mudae	review	tracker	Mudae	database/tracker; shows ecchi cover art, adult entrie
 notify	review	tracker	Notify.moe	database/tracker; shows ecchi cover art, adult entries hidden by account setting	notify.moe
 novelcodex	review	tracker	NovelCodex	database/tracker; shows ecchi cover art, adult entries hidden by account setting	www.novelcodex.com
 novellistdb	review	tracker	NovelList	database/tracker; shows ecchi cover art, adult entries hidden by account setting	www.novellist.co
-atlantic	review	western	Atlantic	general film/drama piracy; R-rated titles (inferred)	atlantic.st
-bingr	review	western	Bingr	general film/drama piracy; R-rated titles (inferred)	bingr.one
-cinemaos	review	western	Cinemaos	general film/drama piracy; R-rated titles (inferred)	cinemaos.live
-hexawatch	review	western	Hexa Watch	general film/drama piracy; R-rated titles (inferred)	hexa.su flixer.su
-hydrahd	review	western	HydraHD	general film/drama piracy; R-rated titles (inferred)	hydrahd.ws hydrahd.com hydrahd.ru hydrahd.me
-m4uhd	review	western	M4uHD	general film/drama piracy; R-rated titles (inferred)	m4uhd.to
-neputo	review	western	NEPU Stream	general film/drama piracy; R-rated titles (inferred)	nepu.io nepu.is
-rivestream	review	western	Rive	general film/drama piracy; R-rated titles (inferred)	www.rivestream.app rivestream.vip rivestream.ru
-shuttletv	review	western	ShuttleTV	general film/drama piracy; R-rated titles (inferred)	shuttletv.su shuttletv.pk
-vidboxto	review	western	Vidbox	general film/drama piracy; R-rated titles (inferred)	vidbox.cc
-watchroo	review	western	Watchroo	general film/drama piracy; R-rated titles (inferred)	www.watchroo.com
+atlantic	general	western	Atlantic	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: inferred: catalogue comes from TMDB (themoviedb references in the page/app code), which lists R-rated films	atlantic.st
+bingr	general	western	Bingr	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: inferred: catalogue comes from TMDB (themoviedb references in the page/app code), which lists R-rated films	bingr.one
+cinemaos	general	western	Cinemaos	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified: serves Fifty Shades of Grey (TMDB 341174, R: sexual content, nudity)	cinemaos.live
+hexawatch	general	western	Hexa Watch	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: extension maintainers label it NSFW (Aniyomi: HexaWatch); serves Fifty Shades of Grey (TMDB 341174, R: sexual content, nudity)	hexa.su flixer.su
+hydrahd	general	western	HydraHD	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: inferred: catalogue comes from TMDB (themoviedb references in the page/app code), which lists R-rated films	hydrahd.ws hydrahd.com hydrahd.ru hydrahd.me
+m4uhd	general	western	M4uHD	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified: /genre/erotic and /genre/adult are real listings (control path does not echo)	m4uhd.to
+neputo	general	western	NEPU Stream	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: piracy, but behind a Cloudflare challenge, so it could not be checked (2026-10-01); not blocked	nepu.io nepu.is
+rivestream	general	western	Rive	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: inferred: catalogue comes from TMDB (themoviedb references in the page/app code), which lists R-rated films	www.rivestream.app rivestream.vip rivestream.ru
+shuttletv	general	western	ShuttleTV	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: piracy, but no NSFW evidence found (2026-10-01: genre pages, The Handmaiden search, TMDB check); not blocked	shuttletv.su shuttletv.pk
+vidboxto	general	western	Vidbox	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified: serves Fifty Shades of Grey (TMDB 341174, R: sexual content, nudity)	vidbox.cc
+watchroo	general	western	Watchroo	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified: serves Fifty Shades of Grey (TMDB 341174, R: sexual content, nudity)	www.watchroo.com
 vnclub	review	wiki	VN Club	database/tracker; shows ecchi cover art, adult entries hidden by account setting	vnclub.org
 danbooru	safe-endpoint	artboard	Danbooru	safebooru.donmai.us enforces rating:g server-side; danbooru.donmai.us already Hagezi-blocked	
 akross	clean	amv	AKROSS	no NSFW content found	
@@ -711,24 +713,24 @@ mydramalist	clean	database	MyDramaList	no NSFW content found
 pornhwadb	clean	database	Pornhwa Database	no NSFW content found	
 vgmdb	clean	database	VGMdb	no NSFW content found	
 vocadb	clean	database	VocaDB	no NSFW content found	
-acgnx	clean	download	AcgnX	no media hosted	
-acgrip	clean	download	ACG.RIP	no media hosted	
-animerss	clean	download	AnimeRss	no media hosted	
+acgnx	general	download	AcgnX	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue anime torrent index (inferred: catalogue includes ecchi titles); Cloudflare challenge	www.acgnx.se www.anix.moe share.acgnx.se
+acgrip	general	download	ACG.RIP	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue anime torrent index (inferred: catalogue includes ecchi titles)	acg.rip
+animerss	general	download	AnimeRss	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial full-catalogue anime/manga download site (inferred: catalogue includes ecchi titles); page shows an 18+ label	animerss.com
 animkinfo	clean	download	AniMK	subtitles/index/music only	
 beatriceraws	clean	download	Beatrice-Raws	subtitles/index/music only	
-cartoonsarea	clean	download	Cartoonsarea	no media hosted	
+cartoonsarea	general	download	Cartoonsarea	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: unofficial anime/cartoon download site (inferred: catalogue includes ecchi titles)	cartoonsarea.com
 jimaku	clean	download	Jimaku	subtitles/index/music only	
-jpfiles	clean	download	JPFiles	no media hosted	
+jpfiles	general	download	JPFiles	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: verified: has a 成年書籍 (adult books) category, Fantia cosplay sets and idol videos	jpfiles.net
 kitsunekko	clean	download	kitsunekko.net	subtitles/index/music only	
-moriyashrine	clean	download	Moriya Shrine	no media hosted	
+moriyashrine	clean	download	Moriya Shrine	Touhou community forum and resources; no NSFW labels found	
 nibl	clean	download	nibl.co.uk	subtitles/index/music only	
 nipponsei	clean	download	Nipponsei	subtitles/index/music only	
 releasesmoe	clean	download	SeaDex	subtitles/index/music only	
 shanaproject	clean	download	Shana Project	subtitles/index/music only	
 sneedex	clean	download	Sneedex	subtitles/index/music only	
-tokyotosho	clean	download	Tokyo Toshokan	no media hosted	
+tokyotosho	general	download	Tokyo Toshokan	general-purpose piracy (torrent/DDL/streaming); not blocked for incidental NSFW (owner rule 2026-10-02). Was: torrent index with a Hentai category; not reachable on 2026-10-01 (NXDOMAIN at router), added defensively	+www.tokyotosho.info
 toonshub	clean	download	ToonsHub	subtitles/index/music only	
-zekozimo	clean	download	Zekozimo	no media hosted	
+zekozimo	clean	download	Zekozimo	tokusatsu downloads; no NSFW labels found	
 1animenationforum	clean	forums	AnimeNation Forums	no NSFW content found	
 2animeforum	clean	forums	AnimeForum.com	no NSFW content found	
 39chan	clean	forums	39chan	no NSFW content found	
@@ -918,3 +920,6 @@ touhouwiki	clean	wiki	Touhou Wiki	no NSFW content found
 wdalf	clean	wiki	WDALF	no NSFW content found	
 wotaku	clean	wiki	Wotaku	no NSFW content found	
 yaoime	explicit	manga	yaoi.me	verified: /genre/smut, /genre/adult, /genre/ecchi are real listings (control path 404s)	yaoi.me
+kototv	unreviewed	anime	KotoTV		hls.hiasian.to
+oriyami	unreviewed	manga	OriYami		oriyami.com
+knoxt	unreviewed	novel	KnoxT		knoxt.space

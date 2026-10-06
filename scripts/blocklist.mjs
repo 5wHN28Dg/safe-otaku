@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-// Maintains blocklist/sites.tsv (sites listed on everythingmoe.com) and
-// blocklist/extensions.tsv (source hosts in reader-app extension repos), and
-// builds the adblock-lean raw lists from both.
+// Maintains three reviewed sources and builds the adblock-lean raw lists from them:
+//   blocklist/sites.tsv       sites listed on everythingmoe.com
+//   blocklist/extensions.tsv  source hosts in reader-app extension repos
+//   blocklist/fmhy.tsv        media, search, front-end and bypass hosts listed on fmhy.net
 //
 //   node scripts/blocklist.mjs build   *.tsv -> blocklist/<tier>.txt
-//   node scripts/blocklist.mjs audit   refresh both TSVs from everythingmoe.com,
-//                                      the extension repos and Hagezi NSFW, then build
+//   node scripts/blocklist.mjs audit   refresh the TSVs from their sources and
+//                                      Hagezi NSFW, then build
 //
 // Runs on the development machine only. Nothing here is deployed to the router.
 
@@ -19,7 +20,30 @@ const TSV = path.join(DIR, 'sites.tsv');
 const HEADER = '# slug\ttier\tsection\tname\tevidence\tdomains (+ = already in Hagezi NSFW at audit time)';
 const EXT_TSV = path.join(DIR, 'extensions.tsv');
 const EXT_HEADER = '# host (+ = already in Hagezi NSFW at audit time)\ttier\tmaintainer label\tevidence\textensions (repo:name)';
-const EXT_ORDER = ['explicit', 'ecchi', 'review', 'unreviewed', 'safe', 'covered'];
+const EXT_ORDER = ['explicit', 'ecchi', 'review', 'general', 'unreviewed', 'safe', 'covered'];
+const FMHY_TSV = path.join(DIR, 'fmhy.tsv');
+const FMHY_HEADER = '# host (+ = already in Hagezi NSFW at audit time)\ttier\tgroup\tevidence\twhere (fmhy page/section)';
+const FMHY_ORDER = ['explicit', 'ecchi', 'bypass', 'review', 'library', 'general', 'unverified', 'unreviewed', 'covered', 'clean'];
+const FMHY_DOCS = 'https://api.github.com/repos/fmhy/edit/contents/docs';
+const FMHY_RAW = 'https://raw.githubusercontent.com/fmhy/edit/main/docs/';
+// Which fmhy sections are audited. Everything else on fmhy (tools, education,
+// software) is out of scope unless fmhy itself annotates a link as NSFW.
+const FMHY_GROUPS = {
+  anime: { 'video.md': ['Anime Streaming', 'Anime Downloading', 'Anime Torrenting'] },
+  video: { 'video.md': ['Multi-Server', 'P-Stream Forks', 'Stream Aggregators', 'TV Streaming', 'Dedicated-Server', 'Download Sites', 'Torrent Sites', 'Drama Streaming', 'Video Streaming', 'Free w/ Ads', 'Cartoon Streaming', 'Specialty Streaming', 'Specialty Downloading', 'Classics / Public Domain', 'Film Archives', 'Live TV', 'Live TV / Sports', 'Live Sports', 'Sports Replays', 'Stream Lounges'] },
+  manga: { 'reading.md': ['Manga'] },
+  reading: { 'reading.md': ['Comics', 'Light Novels', 'Fanfiction / Stories', 'Ebooks', 'Downloading', 'Magazines', 'Visual Media', 'Streaming', 'Special Interest', 'Documents / Articles'] },
+  download: { 'downloading.md': ['Download Sites', 'Download Directories', 'Indexers', 'Search Sites', 'Usenet', 'Debrid / Leeches'] },
+  torrent: { 'torrenting.md': ['Torrent Sites', 'Aggregators', 'Private Trackers'] },
+  games: { 'gaming.md': ['Download Games', 'Game Repacks', 'ROM Sites', 'Abandonware / Retro'] },
+  images: { 'image-tools.md': ['Art / Illustrations', 'Download Images', 'Image Hosts', 'Online Galleries', 'Stock Images', 'Image Search Engines'], 'system-tools.md': ['Wallpapers'] },
+  ai: { 'ai.md': ['Roleplaying Chatbots', 'Image Generation', 'Video Generation', 'Specialized Chatbots'] },
+  imageboard: { 'social-media-tools.md': ['4chan Archives', '4chan Tools'] },
+  frontend: { 'social-media-tools.md': ['Players / Frontends', 'Reddit Alternatives', 'Viewers / Downloaders', 'Twitter/X Tools', 'Instagram Tools', 'Reddit Search', 'Subreddit Discovery', 'TikTok Tools', 'Tumblr Tools'] },
+  search: { 'internet-tools.md': ['Search Engines', 'Custom Search Engines'], 'privacy.md': ['Search Engines'], 'storage.md': ['Searx Instances'] },
+  bypass: { 'privacy.md': ['Proxy', 'Proxy Clients', 'Proxy Servers', 'Proxy Sites', 'VPN', 'VPN Server', 'VPN Tools', 'Anti Censorship', 'DNS Adblocking', 'DNS Filters'], 'storage.md': ['Proxy Lists', 'Free VPN Configs', 'Free DNS Resolvers'] },
+};
+const FMHY_NSFW = /\/\s*(Some NSFW|NSFW)\b/i;
 
 // Extension repos linked from everythingmoe's app guides. Each maintainer labels
 // its sources: Keiyoushi as SAFE / MIXED / NSFW, the others as nsfw yes/no.
@@ -42,12 +66,19 @@ const REPOS = [
 ];
 const LABEL_RANK = { safe: 0, mixed: 1, nsfw: 2 };
 
-// Emitted in this order. A domain listed under both tiers goes to the stricter one.
-const TIERS = ['explicit', 'ecchi'];
-// Reviewed but deliberately not blocked. apps: reader apps fetch from the source
-// sites, which the emitted tiers already cover. review: licensed/mainstream
-// services; blocking them is out of proportion. Domains are still tracked.
-const NOT_BLOCKED = new Set(['apps', 'review']);
+// Emitted in this order. A domain listed under several tiers goes to the first one.
+// bypass: hosts that get around a filter the router already enforces (a safe-search
+// redirect, or a platform blocked outright), not NSFW sites in their own right.
+const TIERS = ['explicit', 'ecchi', 'bypass'];
+// Reviewed but deliberately not blocked; domains are still tracked.
+//   apps: reader apps fetch from the source sites, which the emitted tiers cover.
+//   review: licensed/mainstream services; blocking them is out of proportion.
+//   unverified: sites where no NSFW evidence was found. Recheck on audit.
+//   general: general-purpose piracy (torrent/DDL indexes, Netflix-style movie/TV
+//     streaming, game/ebook/magazine downloads). Owner rule: not blocked for
+//     incidental NSFW; only sites that are purely or mainly NSFW are.
+//   library: public preservation libraries (LibGen, Anna's Archive, Z-Library…). Never blocked.
+const NOT_BLOCKED = new Set(['apps', 'review', 'unverified', 'general', 'library']);
 const NO_DOMAINS = new Set(['clean', 'safe-endpoint']);
 
 const EM = 'https://everythingmoe.com';
@@ -61,7 +92,7 @@ const SHARED = [
   'chromewebstore.google.com', 'chrome.google.com', 'addons.mozilla.org', 'greasyfork.org',
   'everythingmoe.com', 'rentry.co', 'rentry.org', 'pastebin.com', 'docs.google.com', 'wikipedia.org',
   'patreon.com', 'ko-fi.com', 'archive.org', 'telegra.ph', 'medium.com', 'microsoftedge.microsoft.com',
-  'raw.githubusercontent.com', 'bsky.app', 'apkmirror.com', 'flathub.org', 'teamup.com',
+  'raw.githubusercontent.com', 'bsky.app', 'apkmirror.com', 'flathub.org', 'teamup.com', 'telegram.me', 'google.com',
 ];
 // Hosts that must stay resolvable: safe endpoints and the router's own MangaDex proxy upstreams.
 const NEVER = new Set([
@@ -108,15 +139,34 @@ function writeExtTsv(rows) {
   fs.writeFileSync(EXT_TSV, [EXT_HEADER, ...lines, ''].join('\n'));
 }
 
+function readFmhyTsv() {
+  if (!fs.existsSync(FMHY_TSV)) return [];
+  const rows = [];
+  for (const line of fs.readFileSync(FMHY_TSV, 'utf8').split('\n')) {
+    if (!line || line.startsWith('#')) continue;
+    const [h, tier, group, evidence, where = ''] = line.split('\t');
+    rows.push({ host: h.replace(/^\+/, ''), hagezi: h.startsWith('+'), tier, group, evidence, where: where.split(' | ').filter(Boolean) });
+  }
+  return rows;
+}
+
+function writeFmhyTsv(rows) {
+  rows.sort((a, b) => FMHY_ORDER.indexOf(a.tier) - FMHY_ORDER.indexOf(b.tier) || a.host.localeCompare(b.host));
+  const lines = rows.map((r) => [(r.hagezi ? '+' : '') + r.host, r.tier, r.group, r.evidence, r.where.join(' | ')].join('\t'));
+  fs.writeFileSync(FMHY_TSV, [FMHY_HEADER, ...lines, ''].join('\n'));
+}
+
 function build() {
   const sites = readTsv();
   const ext = readExtTsv();
+  const fmhy = readFmhyTsv();
   const seen = new Set();
   for (const tier of TIERS) {
     const out = [];
     const candidates = [
       ...sites.filter((s) => s.tier === tier).flatMap((s) => s.domains),
       ...ext.filter((r) => r.tier === tier).map((r) => ({ d: r.host, hagezi: r.hagezi })),
+      ...fmhy.filter((r) => r.tier === tier).map((r) => ({ d: r.host, hagezi: r.hagezi })),
     ];
     for (const { d, hagezi } of candidates) {
       if (hagezi || seen.has(d) || NEVER.has(d)) continue;
@@ -125,7 +175,7 @@ function build() {
     }
     out.sort();
     const head = [
-      `# safe-otaku ${tier} blocklist, generated from blocklist/sites.tsv and blocklist/extensions.tsv. Do not edit by hand.`,
+      `# safe-otaku ${tier} blocklist, generated from blocklist/*.tsv. Do not edit by hand.`,
       '# Domains already in Hagezi NSFW at audit time are omitted.',
       `# Entries: ${out.length}`,
     ];
@@ -136,6 +186,8 @@ function build() {
   if (pending.length) console.log(`unreviewed sites: ${pending.map((s) => s.slug).join(', ')}`);
   const pendingExt = ext.filter((r) => r.tier === 'unreviewed');
   if (pendingExt.length) console.log(`unreviewed extension hosts: ${pendingExt.length} (tier "unreviewed" in extensions.tsv)`);
+  const pendingFmhy = fmhy.filter((r) => r.tier === 'unreviewed');
+  if (pendingFmhy.length) console.log(`unreviewed fmhy hosts: ${pendingFmhy.length} (tier "unreviewed" in fmhy.tsv)`);
 }
 
 async function get(url, headers = {}) {
@@ -287,6 +339,88 @@ async function auditExtensions(inHagezi, sites) {
   if (newMixed.length) console.log(`new MIXED hosts blocked as explicit; check for licensed services and move those to "review": ${newMixed.join(' ')}`);
 }
 
+// Returns Map host -> { group, where[], nsfw } for every in-scope or NSFW-annotated fmhy link.
+async function scrapeFmhy() {
+  const groupOf = {};
+  for (const [group, files] of Object.entries(FMHY_GROUPS)) {
+    for (const [file, sections] of Object.entries(files)) for (const s of sections) groupOf[`${file}/${s}`] = group;
+  }
+  const hosts = new Map();
+  const files = JSON.parse(await get(FMHY_DOCS)).filter((f) => f.type === 'file' && f.name.endsWith('.md'));
+  for (const f of files) {
+    let section = '';
+    for (const line of (await get(FMHY_RAW + f.name)).split('\n')) {
+      const heading = line.match(/^#+\s*(.*)/);
+      if (heading) { section = heading[1].replace(/[▷►#*]/g, '').trim(); continue; }
+      let group = groupOf[`${f.name}/${section}`];
+      if (!group && f.name === 'non-english.md') {
+        if (/^Streaming/.test(section)) group = 'video';
+        else if (/^Torrenting/.test(section)) group = 'torrent';
+        else if (/^Downloading/.test(section)) group = 'download';
+        else if (section === 'Manga') group = 'manga';
+        else if (/^(Reading|Light Novels)/.test(section)) group = 'reading';
+      }
+      // fmhy's annotation describes the entry: the links before the first " - " (its
+      // name, alternatives and mirrors), not the Discord/Lemmy/subreddit links after it.
+      const nsfwLine = FMHY_NSFW.test(line);
+      if (!group && !nsfwLine) continue;
+      const entryEnd = line.indexOf(' - ') === -1 ? line.length : line.indexOf(' - ');
+      for (const m of line.matchAll(/\]\((https?:\/\/[^)\s]+)\)/g)) {
+        const url = m[1];
+        const nsfw = nsfwLine && m.index < entryEnd;
+        const h = host(url);
+        if (!h || isShared(h) || h.endsWith('.onion')) continue;
+        if (!group && !nsfw) continue;
+        const x = hosts.get(h) || { group: group || 'other', where: [], nsfw: false };
+        const w = `${f.name.replace(/\.md$/, '')}/${section}`;
+        if (!x.where.includes(w)) x.where.push(w);
+        x.nsfw ||= nsfw;
+        hosts.set(h, x);
+      }
+    }
+  }
+  return hosts;
+}
+
+async function auditFmhy(inHagezi, sites, ext) {
+  const classified = new Map();
+  for (const s of sites) for (const { d } of s.domains) if (!classified.has(d)) classified.set(d, `sites.tsv (${s.slug}: ${s.tier})`);
+  for (const r of ext) if (!classified.has(r.host)) classified.set(r.host, `extensions.tsv (${r.tier})`);
+  const coveredBy = (h) => {
+    const p = h.split('.');
+    for (let i = 0; i < p.length - 1; i++) {
+      const c = classified.get(p.slice(i).join('.'));
+      if (c) return c;
+    }
+    return null;
+  };
+
+  const found = await scrapeFmhy();
+  const rows = readFmhyTsv();
+  const byHost = new Map(rows.map((r) => [r.host, r]));
+  let added = 0;
+  for (const [h, x] of found) {
+    let r = byHost.get(h);
+    const c = coveredBy(h);
+    if (!r) {
+      r = { host: h, hagezi: false, tier: 'unreviewed', group: x.group, evidence: 'new on fmhy; not checked', where: [] };
+      if (x.nsfw) Object.assign(r, { tier: 'explicit', evidence: 'fmhy annotates it NSFW / Some NSFW' });
+      if (c) Object.assign(r, { tier: 'covered', evidence: `classified in ${c}` });
+      rows.push(r);
+      byHost.set(h, r);
+      added++;
+    } else if (x.nsfw && ['unreviewed', 'unverified', 'clean'].includes(r.tier)) {
+      console.log(`fmhy now annotates ${h} as NSFW`);
+      Object.assign(r, { tier: 'explicit', evidence: 'fmhy annotates it NSFW / Some NSFW' });
+    }
+    for (const w of x.where) if (!r.where.includes(w)) r.where.push(w);
+  }
+  for (const r of rows) r.hagezi = inHagezi(r.host);
+
+  writeFmhyTsv(rows);
+  console.log(`fmhy hosts in scope: ${found.size}, new: ${added}`);
+}
+
 async function audit() {
   const hz = new Set((await get(HAGEZI)).split('\n').filter((l) => l && !l.startsWith('#')).map((l) => l.trim()));
   const inHagezi = (d) => {
@@ -299,6 +433,7 @@ async function audit() {
   const bySlug = new Map(sites.map((s) => [s.slug, s]));
 
   let added = 0;
+  const claimed = new Set(sites.flatMap((s) => s.domains.map((x) => x.d)));
   for (const [slug, e] of listed) {
     let s = bySlug.get(slug);
     if (!s) {
@@ -309,7 +444,10 @@ async function audit() {
     }
     if (NO_DOMAINS.has(s.tier)) continue;
     for (const d of e.domains) {
-      if (NEVER.has(d) || s.domains.some((x) => x.d === d)) continue;
+      // A domain belongs to one row. Rows split by hand (e.g. clone domains moved
+      // out of a site's row) keep their domains.
+      if (NEVER.has(d) || claimed.has(d)) continue;
+      claimed.add(d);
       s.domains.push({ d, hagezi: false });
       added++;
       if (s.tier !== 'unreviewed') console.log(`new domain for ${slug}: ${d}`);
@@ -321,6 +459,7 @@ async function audit() {
   writeTsv(sites);
   console.log(`everythingmoe sites: ${listed.size}, new domains: ${added}`);
   await auditExtensions(inHagezi, sites);
+  await auditFmhy(inHagezi, sites, readExtTsv());
   build();
 }
 

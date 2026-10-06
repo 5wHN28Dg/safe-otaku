@@ -1,11 +1,22 @@
 # NSFW otaku-site blocklist
 
-Supplementary blocklists for adblock-lean on OpenWrt. They cover NSFW sites that offer no network-enforceable way to filter, and that Hagezi NSFW does not already block. There are two sources:
+Supplementary blocklists for adblock-lean on OpenWrt. They cover NSFW sites that offer no network-enforceable way to filter, and that Hagezi NSFW does not already block. There are three sources:
 
 - **everythingmoe:** sites listed on [everythingmoe.com](https://everythingmoe.com).
 - **Extension repos:** source sites in the reader-app extension repos everythingmoe links to, which apps like Mihon, Aniyomi, Mangayomi and Hayase install sources from.
+- **fmhy:** media, search, front-end and bypass hosts listed on [fmhy.net](https://fmhy.net), read from its source repo (`fmhy/edit`).
 
 "NSFW" here includes ecchi. Anything sexualised is in scope, not just explicit content.
+
+The rule: a site that hosts NSFW content and offers no network-enforceable filter (an API the router proxy can use, or a vendor-documented DNS endpoint) is blocked. Exemptions, none of them blocked:
+
+- **`review`:** licensed or mainstream legal services (Netflix, Crunchyroll, MAL, pixiv…).
+- **`general`:** general-purpose piracy, meaning torrent and DDL indexes, Netflix-style movie/TV streaming, and game, ebook and magazine downloads. These carry NSFW content incidentally (R-rated films, an XXX category); only torrent or streaming sites that are purely or mainly NSFW are blocked.
+- **`library`:** public preservation libraries (LibGen, Anna's Archive, Z-Library, WeLib…).
+
+Information sites (MAL, AniList, AniDB, VNDB, schedules, title lists) are not blocked: they describe titles rather than serve them. Catalogues whose content is hentai or fanservice imagery itself (doujinshi databases, e-hentai tag search, Absolute Territory) are.
+
+Anime streaming sites are not blocked for ecchi. They are blocked only for hentai or explicit content: a Hentai, Erotica or Smut genre, or an extension maintainer's NSFW label (owner rule 2026-10-03). Manga, manhwa and novel aggregators stay under the original rule: ecchi or explicit content means blocked.
 
 ## Files
 
@@ -13,8 +24,10 @@ Supplementary blocklists for adblock-lean on OpenWrt. They cover NSFW sites that
 |---|---|---|
 | `sites.tsv` | Every everythingmoe site with its tier, the evidence for it, and all known domains and mirrors. Reviewed by hand. | Source of truth |
 | `extensions.tsv` | Every source host from the extension repos, with the maintainer's NSFW label, the tier, the evidence and the extensions that use it | Source of truth |
+| `fmhy.tsv` | Every in-scope fmhy host, with its fmhy group, the tier, the evidence and where fmhy lists it | Source of truth |
 | `explicit.txt` | Hentai/porn/smut sites, sites with explicit genres (Hentai, Smut, Adult, Pornographic, R-18), adult stores, hentai reader apps, leak archives, mangadex.org | Yes |
-| `ecchi.txt` | Unofficial aggregators with an Ecchi genre, plus full-catalogue anime/manga/novel mirrors whose catalogues include ecchi titles | Yes |
+| `ecchi.txt` | Unofficial manga/manhwa/novel aggregators with an Ecchi genre, and full-catalogue manga mirrors whose catalogues include ecchi titles | Yes |
+| `bypass.txt` | Hosts that get around a filter the router already enforces: search engines without DNS safe-search enforcement, DuckDuckGo/Yandex domains your redirects miss, and Reddit/TikTok/4chan viewers and archives | Yes |
 | `allowlist.txt` | `api.mangadex.org` and `uploads.mangadex.org`, so the router proxy keeps working after `mangadex.org` is blocked | Yes, with `explicit.txt` |
 
 Domains already covered by Hagezi NSFW are left out of the generated lists (marked `+` in `sites.tsv`). adblock-lean deduplicates across lists anyway.
@@ -22,16 +35,19 @@ Domains already covered by Hagezi NSFW are left out of the generated lists (mark
 Two more tiers in `sites.tsv` are reviewed but deliberately not blocked; the script tracks their domains and does not emit them:
 
 - **`apps` (75 sites).** Landing and download pages for reader apps (Mihon, Aniyomi, Paperback…) and their extension repos. The apps are frontends, and they fetch from source sites that `explicit.txt` and `ecchi.txt` already block.
-- **`review` (109 sites).** Licensed and mainstream services (Crunchyroll, Netflix, MANGA Plus, Webtoon, pixiv…), databases (MAL, AniList…) and general film/drama piracy. They carry some ecchi or mature content behind per-account controls; blocking them outright is out of proportion.
+- **`review`.** Licensed and mainstream services (Crunchyroll, Netflix, MANGA Plus, Webtoon, pixiv…) and databases (MAL, AniList…). They carry some ecchi or mature content behind per-account controls; blocking them outright is out of proportion.
+- **`general`.** General-purpose piracy: torrent/DDL indexes, Netflix-style streaming, game/ebook/magazine downloads. The evidence column keeps what was found ("Was: …") in case the rule changes.
+- **`library`.** Public preservation libraries. Never blocked.
+- **`unverified`.** Sites where no NSFW evidence was found. Recheck these on the next audit.
 
 The `clean` tier holds 232 sites with nothing to block: trackers, schedules, music, quizzes, tools, subtitle sites and similar.
 
 ## Deploy
 
 ```
-scp blocklist/explicit.txt blocklist/ecchi.txt blocklist/allowlist.txt root@192.168.1.1:/tmp/
+scp blocklist/explicit.txt blocklist/ecchi.txt blocklist/bypass.txt blocklist/allowlist.txt root@192.168.1.1:/tmp/
 ssh root@192.168.1.1 '
-  cat /tmp/explicit.txt /tmp/ecchi.txt >> /etc/adblock-lean/blocklist
+  cat /tmp/explicit.txt /tmp/ecchi.txt /tmp/bypass.txt >> /etc/adblock-lean/blocklist
   cat /tmp/allowlist.txt >> /etc/adblock-lean/allowlist
   service adblock-lean start
 '
@@ -45,9 +61,10 @@ Verify from a LAN client:
 dig @192.168.1.1 mangadex.org          # NXDOMAIN
 dig @192.168.1.1 api.mangadex.org      # resolves
 dig @192.168.1.1 sukebei.nyaa.si       # NXDOMAIN
+dig @192.168.1.1 noai.duckduckgo.com   # NXDOMAIN (bypass.txt)
 ```
 
-Cost: about 1,460 extra domains on top of Hagezi's 84k. That is under 2% more dnsmasq entries and about 22 KB.
+Cost: about 1,278 extra domains on top of Hagezi's 84k (952 explicit, 275 ecchi, 51 bypass). That is under 2% more dnsmasq entries and about 20 KB.
 
 ## Safe endpoints
 
@@ -89,7 +106,62 @@ DNS blocking stops a browser from reaching a hostname. It does not stop:
 - **Sources addressed by IP or set at runtime.** About ten extensions use raw IP addresses and some leave `baseUrl` empty and pick the domain at runtime. DNS cannot block an IP, and an empty URL leaves nothing to list.
 - **Kaguya modules.** Its index lists module names without URLs, so it cannot be audited this way.
 - **New mirrors.** They appear constantly. Re-run the audit.
-- **VPNs, and IP-literal or Tor access.** Your router already blocks DoH/DoT; a VPN is a firewall question, not a DNS one.
+- **VPNs, proxies and Tor.** Your router blocks DoH/DoT, but VPN and proxy services are not blocked. See Router recommendations.
+- **Torrent swarms.** Blocking an index does not stop a client that already has a magnet link (see Torrent and download sites).
+- **Platforms you allow.** X/Twitter, Tumblr, Instagram, Discord, Telegram, Imgur and YouTube carry NSFW content and are not blocked. Their viewers are in `review` and follow whatever you decide for each platform.
+
+## Torrent and download sites
+
+Torrent indexes, DDL sites and Usenet indexers are `general` and not blocked, even when they have an XXX or Hentai category (The Pirate Bay, 1337x, Torlock, Knaben, nyaa.si, AnimeTosho…). Only trackers that are purely or mainly NSFW are blocked: `sukebei.nyaa.si`, Erogevn, Sakura Circle, and hentai-only sources from the extension repos (Hentai Torrent, PTorrent…).
+
+DNS only reaches the index anyway. A torrent client fetching a magnet link it already has does not resolve the index at all: it finds peers through DHT and peer exchange, by IP.
+
+## fmhy
+
+fmhy is a general piracy index: 28,603 links to about 16,000 hosts. Most of it (software, tools, education) is out of scope. The audit reads only these groups, plus any link fmhy itself annotates "NSFW" or "Some NSFW":
+
+| Group | fmhy sections | How hosts are tiered |
+|---|---|---|
+| anime, manga | Anime Streaming/Downloading/Torrenting, Manga | Verified labels; otherwise inferred `ecchi` (full catalogue), same as everythingmoe |
+| video | movie/TV streaming, drama, download and torrent sites, live TV, archives | `general` for movie/TV/drama piracy; `review` for legal Free w/ Ads / public-domain / archive services; anime-specific sites follow the anime rule |
+| reading | manga, comics, novels, fanfiction, ebooks, magazines | Manga/manhwa/novel aggregators: verified labels or fmhy annotation → blocked. Ebook/magazine/audiobook piracy → `general`. Libraries → `library`. Fiction platforms: verified labels or a direct test (Archive of Our Own) |
+| download, torrent, games | download sites, indexers, torrent sites, repacks/ROMs | `general` |
+| images, ai | galleries, wallpapers, roleplay chatbots, image/video generators | fmhy's own "NSFW"/"Some NSFW" annotation or verified labels |
+| search | search engines, SearXNG instances | `bypass` if it returns third-party results without vendor-documented DNS enforcement; `clean` for link hubs and redirectors |
+| frontend | YouTube/Reddit/X/Instagram/Tumblr/TikTok viewers | `bypass` when the platform is blocked on the router (Reddit, TikTok, 4chan); `review` otherwise |
+| bypass | VPNs, proxies, DNS resolvers | `review`: use Hagezi's DoH/VPN/TOR/Proxy bypass list instead (see Router recommendations) |
+
+Results (audit 2026-10-01, re-tiered 2026-10-03 for the general-piracy, library and anime-streaming exemptions): 3,034 in-scope hosts.
+
+| Tier | Hosts | Notes |
+|---|---|---|
+| `explicit` | 33 | fmhy's NSFW annotations (AI roleplay/image sites, NSFW webcomic and manga sources), manga/novel aggregators with explicit genres, anime sites with hentai, Archive of Our Own |
+| `ecchi` | 19 | manga sources with an Ecchi genre or a full catalogue |
+| `bypass` | 51 | search engines without DNS enforcement, DuckDuckGo/Yandex gaps, Reddit/TikTok/4chan viewers and archives |
+| `general` | 351 | movie/TV piracy, torrent/DDL indexes, game/ebook/magazine downloads; not blocked |
+| `library` | 10 | LibGen, WeLib, Z-Library mirrors; not blocked |
+| `review` | 308 | legal free streaming and archives, licensed publishers, X/Instagram/Tumblr/YouTube viewers, VPN/proxy/DNS services |
+| `covered` | 358 | already decided in `sites.tsv`/`extensions.tsv`, or already in Hagezi NSFW |
+| `clean` | 39 | tools, wikis, subtitle sites, release indexes |
+| `unverified` | 1,858 | no evidence found, behind Cloudflare, or unreachable; not blocked |
+| `unreviewed` | 7 | new on fmhy since the first audit; not blocked until checked |
+
+Evidence checks were tightened after false positives:
+
+- A genre/tag URL only counts if a made-up name at the same path does not also produce a matching page. WordPress `/tag/` pages echo any word: 5 fmhy sites lost tag evidence this way, and 9 extension-repo sites lost genre evidence earlier.
+- A lone generic word ("adult" as in adult medicine or Adult Swim) on a legal or educational site was overridden by hand. Each override is noted in the evidence column.
+
+`unverified` is large because most of fmhy's reading, image, game and AI links show no NSFW labels in their HTML. They are not blocked. The audit marks them for recheck rather than guessing.
+
+## Router recommendations
+
+These came up during the audits. They are router settings, not list entries.
+
+- **Enable Hagezi's DoH/VPN/TOR/Proxy bypass list** (`hagezi:doh-vpn-proxy-bypass` in adblock-lean's `raw_block_lists`). DoH is blocked today, but 64 of fmhy's VPN, proxy and DNS hosts that this list covers resolve, including Proton VPN, Mullvad and Windscribe. A VPN gets around every DNS block here.
+- **YouTube Restricted Mode is not enforced.** `www.youtube.com` resolves to normal Google IPs. Google documents the DNS method: point `www.youtube.com`, `m.youtube.com`, `youtubei.googleapis.com`, `youtube.googleapis.com` and `www.youtube-nocookie.com` at `restrict.youtube.com` (strict) or `restrictmoderate.youtube.com`. Once that's on, YouTube front-ends (Invidious, Piped, FreeTube…) become bypasses and belong in `bypass`.
+- **Safe-search redirects with gaps.** These resolve to normal servers despite the existing redirects, and are in `bypass.txt` for now:
+  - `html.duckduckgo.com`, `lite.duckduckgo.com` and `noai.duckduckgo.com`, while `duckduckgo.com` is redirected to `safe.duckduckgo.com`. The safe IP refuses `noai`, so it cannot be redirected and is blocked instead.
+  - `www.yandex.com` and `ya.ru`, while `yandex.com` and `yandex.ru` point at Yandex's family-search IP.
 
 ## Extension repos
 
@@ -110,13 +182,15 @@ The labels decide the tier in `extensions.tsv`:
 
 Results from the first audit (2026-10-01): 2,073 hosts from 2,221 extensions. 804 are `explicit` and 61 `ecchi`; 668 of those were reachable before this list, the rest were already in Hagezi. 883 SAFE-labelled hosts showed no evidence or could not be checked (Cloudflare challenge, unreachable) and are not blocked.
 
-The audit adds new hosts automatically: NSFW and MIXED as `explicit`, SAFE as `unreviewed` (not emitted). It prints new MIXED hosts so licensed services can be moved to `review`.
+The audit adds new hosts automatically: NSFW and MIXED as `explicit`, SAFE as `unreviewed` (not emitted). It prints new MIXED hosts so licensed services can be moved to `review`. Aniyomi maintainers also flag some general movie/TV sources as NSFW; move those to `general` when they show up.
 
 ## Maintain
 
 ```
-npm run blocklist:audit   # re-fetch everythingmoe, the extension repos and Hagezi, add new domains, rebuild
-npm run blocklist:build   # rebuild the .txt files after editing sites.tsv
+npm run blocklist:audit   # re-fetch everythingmoe, the extension repos, fmhy and Hagezi; add new domains; rebuild
+npm run blocklist:build   # rebuild the .txt files after editing a TSV
 ```
 
-The audit adds new domains for sites already in a blocking tier. It adds newly listed sites as `unreviewed`, and those are not emitted until you give them a tier. It never removes anything. A site dropped from everythingmoe stays blocked, because dead mirrors come back.
+The audit adds new domains for sites already in a blocking tier. It adds newly listed sites and hosts as `unreviewed`, and those are not emitted until you give them a tier. The exceptions: new hosts that an extension maintainer labels NSFW/MIXED, or that fmhy annotates NSFW, go straight to `explicit`, because that label is the evidence. The audit never removes anything. A site dropped from a source stays blocked, because dead mirrors come back.
+
+The audit does not probe sites for evidence; that is a manual step. Promote `unreviewed` rows by hand after checking them.
