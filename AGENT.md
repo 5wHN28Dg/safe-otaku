@@ -35,8 +35,8 @@ Everything is same-origin. No CORS headers are needed. Routes use the URL hash (
 The CGI is an allowlist, not a filter on top of an open proxy:
 
 - **Endpoints.** It forwards only `/manga`, `/manga/<uuid>/feed` and `/at-home/server/<uuid>`.
-- **Query keys.** It keeps only the keys the frontend sends, then appends `contentRating[]=safe&contentRating[]=suggestive`.
-- **Chapter pages.** Before forwarding `/at-home/server/<id>`, it checks the chapter through `/chapter?ids[]=<id>` with the ratings applied.
+- **Query keys.** It keeps only the keys the frontend sends, then appends `contentRating[]=safe&contentRating[]=suggestive` and the excluded tags (Boys' Love, Girls' Love) via `excludedTags[]`.
+- **Chapter pages.** Before forwarding `/at-home/server/<id>`, it checks the chapter through `/chapter?ids[]=<id>&includes[]=manga` with the ratings applied, and refuses it if the manga carries an excluded tag.
 - **Images.** It proxies only `/covers/<uuid>/<file>` and `/data/<hash>/<file>`.
 
 These rules come from tested MangaDex behaviour: by-ID endpoints ignore `contentRating[]`, and the parameter is accepted in several encodings. A denylist on top of an open proxy leaked both ways.

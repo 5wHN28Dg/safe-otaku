@@ -182,6 +182,12 @@ To add or remove ratings, edit the `RATINGS=` line in `cgi/md`:
 RATINGS="contentRating%5B%5D=safe&contentRating%5B%5D=suggestive"
 ```
 
+### Excluded tags
+
+Titles tagged **Boys' Love** or **Girls' Love** are filtered out the same way, by the CGI, not the frontend. It appends `excludedTags[]=<id>&excludedTagsMode=OR` to every search and to the single-title lookup, so those titles never appear and cannot be opened by ID. The chapter check before `/at-home/server/<id>` asks for the chapter's manga (`includes[]=manga`) in the same request and refuses the chapter if either tag is present. A client cannot loosen this: `includedTags[]`, `excludedTags[]` and `excludedTagsMode` are not on the forwarded-keys allowlist.
+
+To change the list, edit `TAG_BL`/`TAG_GL` and `EXCLUDED` near the top of `cgi/md`. Tag ids come from `GET https://api.mangadex.org/manga/tag`. Tags are set by uploaders and the community, so a title missing a tag is not caught.
+
 MangaDex ratings are `safe`, `suggestive`, `erotica`, and `pornographic`. MangaDex has no Ecchi tag. Uploaders put ecchi titles under `suggestive` or `erotica`, so `suggestive` lets some ecchi through, alongside mainstream titles such as One Piece and Jujutsu Kaisen.
 
 Known residual: someone who already has a cover file name or a chapter image hash from outside this app can fetch that one image through `/img/`. The app itself never hands out names or hashes for titles outside the allowed ratings.
