@@ -44,27 +44,36 @@ The `clean` tier holds 232 sites with nothing to block: trackers, schedules, mus
 
 ## Deploy
 
+From the repository root. The examples use `192.168.1.1`, OpenWrt's default address.
+
 ```
-scp blocklist/explicit.txt blocklist/ecchi.txt blocklist/bypass.txt blocklist/allowlist.txt root@192.168.1.1:/tmp/
+cat blocklist/explicit.txt blocklist/ecchi.txt blocklist/bypass.txt | grep -vE '^[[:space:]]*(#|$)' | sort -u \
+  | ssh root@192.168.1.1 'cat > /tmp/safe-otaku.txt'
 ssh root@192.168.1.1 '
-  cat /tmp/explicit.txt /tmp/ecchi.txt /tmp/bypass.txt >> /etc/adblock-lean/blocklist
-  cat /tmp/allowlist.txt >> /etc/adblock-lean/allowlist
+  BL=/etc/adblock-lean/blocklist; AL=/etc/adblock-lean/allowlist
+  touch $BL $AL; cp $BL $BL.bak; cp $AL $AL.bak
+  strip() { awk "/^# >>> safe-otaku/{s=1} !s{print} /^# <<< safe-otaku/{s=0}" "$1"; }
+  strip $BL > /tmp/bl.user
+  grep -vE "^[[:space:]]*(#|\$)" /tmp/bl.user | sort -u > /tmp/bl.mine
+  { cat /tmp/bl.user; echo "# >>> safe-otaku"; grep -vxF -f /tmp/bl.mine /tmp/safe-otaku.txt; echo "# <<< safe-otaku"; } > $BL
+  { strip $AL; echo "# >>> safe-otaku"; printf "api.mangadex.org\nuploads.mangadex.org\n"; echo "# <<< safe-otaku"; } > /tmp/al && mv /tmp/al $AL
+  rm -f /tmp/bl.user /tmp/bl.mine /tmp/safe-otaku.txt
   service adblock-lean start
 '
 ```
 
-`/etc/adblock-lean/blocklist` and `/etc/adblock-lean/allowlist` are adblock-lean's default `local_blocklist_path` and `local_allowlist_path`. If you already keep your own entries there, merge rather than append blindly: re-running the command appends duplicates. adblock-lean deduplicates them, but the file grows.
+`/etc/adblock-lean/blocklist` and `/etc/adblock-lean/allowlist` are adblock-lean's default `local_blocklist_path` and `local_allowlist_path`. Your own entries stay at the top of each file. Ours go between `# >>> safe-otaku` and `# <<< safe-otaku` markers, minus anything you already list, and re-running replaces only that section. The previous files are kept as `.bak`. adblock-lean tests the new list (DNS resolution of its `test_domains`) before installing it.
 
 Verify from a LAN client:
 
 ```
 dig @192.168.1.1 mangadex.org          # NXDOMAIN
-dig @192.168.1.1 api.mangadex.org      # resolves
+dig @192.168.1.1 api.mangadex.org      # resolves (allowlist)
 dig @192.168.1.1 sukebei.nyaa.si       # NXDOMAIN
 dig @192.168.1.1 noai.duckduckgo.com   # NXDOMAIN (bypass.txt)
 ```
 
-Cost: about 1,278 extra domains on top of Hagezi's 84k (952 explicit, 275 ecchi, 51 bypass). That is under 2% more dnsmasq entries and about 20 KB.
+Cost: about 1,275 extra domains on top of Hagezi's 84k (950 explicit, 274 ecchi, 51 bypass). That is under 2% more dnsmasq entries and about 20 KB.
 
 ## Safe endpoints
 
@@ -106,9 +115,9 @@ DNS blocking stops a browser from reaching a hostname. It does not stop:
 - **Sources addressed by IP or set at runtime.** About ten extensions use raw IP addresses and some leave `baseUrl` empty and pick the domain at runtime. DNS cannot block an IP, and an empty URL leaves nothing to list.
 - **Kaguya modules.** Its index lists module names without URLs, so it cannot be audited this way.
 - **New mirrors.** They appear constantly. Re-run the audit.
-- **VPNs, proxies and Tor.** Your router blocks DoH/DoT, but VPN and proxy services are not blocked. See Router recommendations.
+- **VPNs, proxies, DoH and Tor.** None of these are in these lists. See Router recommendations.
 - **Torrent swarms.** Blocking an index does not stop a client that already has a magnet link (see Torrent and download sites).
-- **Platforms you allow.** X/Twitter, Tumblr, Instagram, Discord, Telegram, Imgur and YouTube carry NSFW content and are not blocked. Their viewers are in `review` and follow whatever you decide for each platform.
+- **Mainstream platforms.** X/Twitter, Tumblr, Instagram, Discord, Telegram, Imgur and YouTube carry NSFW content and are not in these lists. Their viewers are in `review`; whether to block a platform is a per-household decision.
 
 ## Torrent and download sites
 
@@ -128,7 +137,7 @@ fmhy is a general piracy index: 28,603 links to about 16,000 hosts. Most of it (
 | download, torrent, games | download sites, indexers, torrent sites, repacks/ROMs | `general` |
 | images, ai | galleries, wallpapers, roleplay chatbots, image/video generators | fmhy's own "NSFW"/"Some NSFW" annotation or verified labels |
 | search | search engines, SearXNG instances | `bypass` if it returns third-party results without vendor-documented DNS enforcement; `clean` for link hubs and redirectors |
-| frontend | YouTube/Reddit/X/Instagram/Tumblr/TikTok viewers | `bypass` when the platform is blocked on the router (Reddit, TikTok, 4chan); `review` otherwise |
+| frontend | YouTube/Reddit/X/Instagram/Tumblr/TikTok viewers | `bypass` when the platform is blocked in the target setup (Reddit, TikTok, 4chan; see Assumptions); `review` otherwise |
 | bypass | VPNs, proxies, DNS resolvers | `review`: use Hagezi's DoH/VPN/TOR/Proxy bypass list instead (see Router recommendations) |
 
 Results (audit 2026-10-01, re-tiered 2026-10-03 for the general-piracy, library and anime-streaming exemptions): 3,034 in-scope hosts.
@@ -153,15 +162,25 @@ Evidence checks were tightened after false positives:
 
 `unverified` is large because most of fmhy's reading, image, game and AI links show no NSFW labels in their HTML. They are not blocked. The audit marks them for recheck rather than guessing.
 
+## Assumptions
+
+`bypass.txt` only makes sense alongside filters the router already enforces. The current list assumes:
+
+- **DNS safe-search redirects** for Google (`forcesafesearch.google.com`), Bing (`strict.bing.com`), DuckDuckGo (`safe.duckduckgo.com`), Brave Search, Startpage and Yandex (`yandex.com`/`yandex.ru` to the family-search IP). adblock-lean's `hagezi:nosafesearch` list blocks engines that offer no such redirect.
+- **Reddit, TikTok and 4chan blocked outright.** Their viewers, archives and downloaders are in `bypass.txt`.
+- **DoH and DoT blocked, and port 53 redirected to the router**, so clients cannot use their own resolver.
+
+If your setup differs, review the `bypass` rows in `fmhy.tsv` before deploying `bypass.txt`.
+
 ## Router recommendations
 
 These came up during the audits. They are router settings, not list entries.
 
-- **Enable Hagezi's DoH/VPN/TOR/Proxy bypass list** (`hagezi:doh-vpn-proxy-bypass` in adblock-lean's `raw_block_lists`). DoH is blocked today, but 64 of fmhy's VPN, proxy and DNS hosts that this list covers resolve, including Proton VPN, Mullvad and Windscribe. A VPN gets around every DNS block here.
-- **YouTube Restricted Mode is not enforced.** `www.youtube.com` resolves to normal Google IPs. Google documents the DNS method: point `www.youtube.com`, `m.youtube.com`, `youtubei.googleapis.com`, `youtube.googleapis.com` and `www.youtube-nocookie.com` at `restrict.youtube.com` (strict) or `restrictmoderate.youtube.com`. Once that's on, YouTube front-ends (Invidious, Piped, FreeTube…) become bypasses and belong in `bypass`.
-- **Safe-search redirects with gaps.** These resolve to normal servers despite the existing redirects, and are in `bypass.txt` for now:
-  - `html.duckduckgo.com`, `lite.duckduckgo.com` and `noai.duckduckgo.com`, while `duckduckgo.com` is redirected to `safe.duckduckgo.com`. The safe IP refuses `noai`, so it cannot be redirected and is blocked instead.
-  - `www.yandex.com` and `ya.ru`, while `yandex.com` and `yandex.ru` point at Yandex's family-search IP.
+- **Hagezi's DoH/VPN/TOR/Proxy bypass list** (`hagezi:doh-vpn-proxy-bypass` in adblock-lean's `raw_block_lists`). Without it, a VPN app or web proxy gets around every DNS block. If the router itself runs a VPN client, check that its endpoint is an IP address, not a hostname: the list blocks VPN providers' domains (e.g. `protonvpn.com/.net/.ch`), so a hostname endpoint would stop resolving. Policy-based routing by IP range or by unrelated domains is unaffected.
+- **YouTube Restricted Mode.** Google documents the DNS method: point `www.youtube.com`, `m.youtube.com`, `youtubei.googleapis.com`, `youtube.googleapis.com` and `www.youtube-nocookie.com` at `restrict.youtube.com` (strict) or `restrictmoderate.youtube.com`. Once that's on, YouTube front-ends (Invidious, Piped, FreeTube…) become bypasses and belong in `bypass`.
+- **Safe-search redirects usually miss some hostnames.** These resolve to the normal servers unless redirected or blocked, and `bypass.txt` blocks them:
+  - `html.duckduckgo.com`, `lite.duckduckgo.com` and `noai.duckduckgo.com`. DuckDuckGo's safe IP refuses `noai`, so it cannot be redirected, only blocked.
+  - `www.yandex.com` and `ya.ru`, alongside the commonly redirected `yandex.com` and `yandex.ru`.
 
 ## Extension repos
 

@@ -4,7 +4,10 @@ Reference document for anyone — human or agent — making changes to this repo
 
 ## What this project is
 
-A read-only, safe-mode frontend for MangaDex, self-hosted on an OpenWrt router. It enforces the `safe` and `suggestive` content ratings server-side, in the CGI, on every API request. It is not a content filter for `mangadex.org`; it is a separate site served from the LAN.
+Two parts, both for an OpenWrt router:
+
+- A read-only, safe-mode frontend for MangaDex. It enforces the `safe` and `suggestive` content ratings and the excluded tags server-side, in the CGI, on every API request. It is not a content filter for `mangadex.org`; it is a separate site served from the LAN.
+- Blocklists for adblock-lean (`blocklist/`), covering NSFW anime/manga sites that Hagezi NSFW misses.
 
 ## Hard constraints
 
@@ -49,7 +52,7 @@ This tradeoff is documented so future contributors do not re-litigate it without
 
 ## Why the CGI, not a uhttpd ucode handler (checked against OpenWrt 25.12.5)
 
-The router runs OpenWrt 25.12.5. Its source (tag `v25.12.5`, uhttpd `7b1bec4`, uclient `daad21f`) was checked for anything that should change this architecture:
+OpenWrt 25.12.5's source (tag `v25.12.5`, uhttpd `7b1bec4`, uclient `daad21f`) was checked for anything that should change this architecture:
 
 - **ucode handlers fork per request too.** In 25.12, LuCI runs as a uhttpd ucode handler (`luci-base` registers `ucode_prefix`). But uhttpd's `ucode_handle_request` calls `create_process`, which `fork()`s a child per request, just like CGI. Moving the proxy to ucode would only skip the `exec` of `sh` and `uclient-fetch` inside that child. It would need `ucode-mod-uclient` (not a default package) and an async HTTP client written against uloop. Not worth it unless per-request latency is measured on the router and found to matter.
 - **One shared limit.** ucode and CGI handlers both count against `max_requests` (default 3). LuCI and this app share those three slots: a chapter loading pages can make LuCI wait, and the reverse.
@@ -77,25 +80,9 @@ Conclusion: no architectural change. Revisit if CGI latency is measured as a pro
 
 **Any new feature must fit the RAM, flash, and bundle budgets.** If it does not, it is the wrong feature for this host. The policy document this project follows puts the platform's constraints above feature convenience.
 
-## Build
+## Build and deploy
 
-```
-npm install
-npm run build
-```
-
-Produces `dist/index.html`, `dist/bundle.js`, `dist/styles.css`.
-
-## Deploy
-
-```
-ssh root@ROUTER_IP 'mkdir -p /www/mangadex-safe'
-scp -r dist/* root@ROUTER_IP:/www/mangadex-safe/
-scp cgi/md root@ROUTER_IP:/www/cgi-bin/md
-ssh root@ROUTER_IP 'chmod +x /www/cgi-bin/md'
-```
-
-Confirm `/etc/config/uhttpd` has `option cgi_prefix '/cgi-bin'`. If not, add it and `/etc/init.d/uhttpd reload`.
+See [docs/install.md](docs/install.md) for building and copying to the router, and [docs/development.md](docs/development.md) for the local development server.
 
 ## Testing
 
@@ -143,8 +130,8 @@ Rules for changes:
 
 - **`blocklist/sites.tsv`, `blocklist/extensions.tsv` and `blocklist/fmhy.tsv` are the reviewed sources of truth.** The `.txt` files are generated. Change a tier in the TSV and run `npm run blocklist:build`; never edit the `.txt` files by hand.
 - **Every tier needs evidence** in the `evidence` column. Say whether it was verified (labels found, API response) or inferred.
-- **The owner's rule.** A site that hosts any NSFW content (ecchi included) and offers no network-enforceable filter (an API the proxy can use, or a vendor-documented DNS endpoint) is blocked. Exempt, never blocked: licensed or mainstream legal services (`review`); general-purpose piracy such as torrent/DDL indexes, Netflix-style movie/TV streaming and game/ebook/magazine downloads, unless purely or mainly NSFW (`general`); public preservation libraries like LibGen, Anna's Archive and Z-Library (`library`). Anime streaming is blocked only for hentai/explicit content (Hentai, Erotica or Smut genres, or a maintainer NSFW label), not for ecchi. Manga, manhwa and novel aggregators stay under the ecchi rule. AI roleplay/image sites marked NSFW are blocked. Information sites (MAL, AniList, AniDB, VNDB, schedules, title lists) are never blocked: they describe titles, they don't serve the content. Catalogues whose content is hentai or fanservice imagery itself (doujinshi databases, e-hentai tag search) are blocked.
-- **`bypass` is for hosts that get around a filter the router already enforces.** That means a safe-search redirect, or a platform blocked outright (Reddit, TikTok, 4chan). Such a host is blocked whether or not it hosts NSFW itself. VPN/proxy services belong in Hagezi's DoH/VPN/TOR/Proxy bypass list, not here.
+- **The blocking rule.** A site that hosts any NSFW content (ecchi included) and offers no network-enforceable filter (an API the proxy can use, or a vendor-documented DNS endpoint) is blocked. Exempt, never blocked: licensed or mainstream legal services (`review`); general-purpose piracy such as torrent/DDL indexes, Netflix-style movie/TV streaming and game/ebook/magazine downloads, unless purely or mainly NSFW (`general`); public preservation libraries like LibGen, Anna's Archive and Z-Library (`library`). Anime streaming is blocked only for hentai/explicit content (Hentai, Erotica or Smut genres, or a maintainer NSFW label), not for ecchi. Manga, manhwa and novel aggregators stay under the ecchi rule. AI roleplay/image sites marked NSFW are blocked. Information sites (MAL, AniList, AniDB, VNDB, schedules, title lists) are never blocked: they describe titles, they don't serve the content. Catalogues whose content is hentai or fanservice imagery itself (doujinshi databases, e-hentai tag search) are blocked.
+- **`bypass` is for hosts that get around a filter the target setup already enforces.** That means a safe-search redirect, or a platform blocked outright (the current list assumes Reddit, TikTok and 4chan are blocked; see `blocklist/README.md`, Assumptions). Such a host is blocked whether or not it hosts NSFW itself. VPN/proxy services belong in Hagezi's DoH/VPN/TOR/Proxy bypass list, not here.
 - **Keep the proxy's upstreams resolvable.** `api.mangadex.org` and `uploads.mangadex.org` are in `blocklist/allowlist.txt` and in the script's `NEVER` set. The router's own dnsmasq serves the CGI, so blocking them breaks the proxy.
 - **Only count a "safe" endpoint as safe if the server enforces the filter.** Show that non-safe content is refused, not just hidden. Currently only `safebooru.donmai.us` qualifies.
 - **Don't propose CNAME rewrites** unless the vendor documents the target for DNS enforcement (Google/YouTube style). A CNAME to a sibling hostname on the same servers enforces nothing.
@@ -152,7 +139,7 @@ Rules for changes:
 
 ## Policy
 
-This project follows the principles in `evidence-first web engineering`. The relevant ones:
+This project follows [evidence-first web engineering](docs/policies/evidence-first-web-engineering.md) and its companion, [evidence-first platform engineering](docs/policies/evidence-first-platform-engineering.md). The relevant principles:
 
 - The browser platform comes first. HTML elements, CSS, and Web APIs are used directly wherever they suffice.
 - A small library is justified when it closes a specific gap. Preact closes the state-to-DOM binding gap, and is the only runtime library. htm was removed: it closed a "JSX without a build step" gap, but esbuild is already the build step and compiles JSX, so htm only added template parsing at runtime.
@@ -161,24 +148,4 @@ This project follows the principles in `evidence-first web engineering`. The rel
 
 ## Repository layout
 
-```
-.
-├── AGENT.md                # this file
-├── CLAUDE.md               # operational notes for Claude Code sessions
-├── README.md               # user-facing install and usage
-├── LICENSE                 # AGPL-3.0
-├── cgi/md                  # the proxy script (runs on the router)
-├── blocklist/              # adblock-lean lists for NSFW otaku sites (see below)
-├── scripts/copy-static.js  # build helper
-├── scripts/dev-server.mjs  # local stand-in for uhttpd + CGI (npm run dev)
-├── scripts/blocklist.mjs   # audits everythingmoe + Hagezi, builds blocklist/*.txt
-├── src/
-│   ├── index.html
-│   ├── styles.css
-│   ├── index.jsx
-│   ├── app.jsx
-│   ├── lib/                # api, db, router
-│   └── components/         # Header, Browse, Detail, Reader, Favorites (.jsx)
-├── package.json
-└── package-lock.json
-```
+See [docs/development.md](docs/development.md#project-layout).

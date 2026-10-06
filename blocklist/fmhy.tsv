@@ -51,57 +51,57 @@ www.manhuapi.cc	ecchi	manga	inferred: unofficial full-catalogue manga source; ca
 www.manhuazhan.com	ecchi	manga	inferred: unofficial full-catalogue manga source; catalogue includes ecchi titles	non-english/Manga
 www.mkzhan.com	ecchi	manga	inferred: unofficial full-catalogue manga source; catalogue includes ecchi titles	non-english/Manga
 www.yibenmanhua.com	ecchi	manga	inferred: unofficial full-catalogue manga source; catalogue includes ecchi titles	non-english/Manga
-4chan-next.com	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked on the router (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Tools
-4chansearch.com	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked on the router (archives sit behind Cloudflare, so board lists could not be read)	internet-tools/Search Tools | social-media-tools/4chan Archives
+4chan-next.com	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked in the target setup (see blocklist/README.md, Assumptions) (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Tools
+4chansearch.com	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked in the target setup (see blocklist/README.md, Assumptions) (archives sit behind Cloudflare, so board lists could not be read)	internet-tools/Search Tools | social-media-tools/4chan Archives
 4get.ca	bypass	search	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	privacy/Search Engines
-4search.neocities.org	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked on the router (archives sit behind Cloudflare, so board lists could not be read)	internet-tools/Search Tools | social-media-tools/4chan Archives
-arch.b4k.dev	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked on the router (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
-archive.4plebs.org	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked on the router (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
-archive.palanq.win	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked on the router (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
-archived.moe	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked on the router (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
-arctic-shift.photon-reddit.com	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Reddit Search
-ayasequart.org	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked on the router (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
-betterredditsearch.web.app	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Reddit Search
-catalog.neet.tv	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked on the router (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
-deletedby.com	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Reddit Search
-desuarchive.org	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked on the router (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
-ghostddit.aeddit.com	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Reddit Search
-html.duckduckgo.com	bypass	search	DuckDuckGo subdomain not covered by the router's safe.duckduckgo.com redirect; the safe IP refuses noai and html/lite enforcement could not be verified	privacy/Search Engines
-ihsoyct.github.io	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Reddit Search
+4search.neocities.org	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked in the target setup (see blocklist/README.md, Assumptions) (archives sit behind Cloudflare, so board lists could not be read)	internet-tools/Search Tools | social-media-tools/4chan Archives
+arch.b4k.dev	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked in the target setup (see blocklist/README.md, Assumptions) (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
+archive.4plebs.org	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked in the target setup (see blocklist/README.md, Assumptions) (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
+archive.palanq.win	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked in the target setup (see blocklist/README.md, Assumptions) (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
+archived.moe	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked in the target setup (see blocklist/README.md, Assumptions) (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
+arctic-shift.photon-reddit.com	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Reddit Search
+ayasequart.org	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked in the target setup (see blocklist/README.md, Assumptions) (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
+betterredditsearch.web.app	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Reddit Search
+catalog.neet.tv	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked in the target setup (see blocklist/README.md, Assumptions) (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
+deletedby.com	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Reddit Search
+desuarchive.org	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked in the target setup (see blocklist/README.md, Assumptions) (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
+ghostddit.aeddit.com	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Reddit Search
+html.duckduckgo.com	bypass	search	DuckDuckGo subdomain not covered by the usual safe.duckduckgo.com redirect; the safe IP refuses noai and html/lite enforcement could not be verified	privacy/Search Engines
+ihsoyct.github.io	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Reddit Search
 jumps.io	bypass	search	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	internet-tools/Search Engines
-lite.duckduckgo.com	bypass	search	DuckDuckGo subdomain not covered by the router's safe.duckduckgo.com redirect; the safe IP refuses noai and html/lite enforcement could not be verified	privacy/Search Engines
+lite.duckduckgo.com	bypass	search	DuckDuckGo subdomain not covered by the usual safe.duckduckgo.com redirect; the safe IP refuses noai and html/lite enforcement could not be verified	privacy/Search Engines
 marginalia-search.com	bypass	search	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	internet-tools/Search Engines
 nilch.org	bypass	search	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	privacy/Search Engines
-noai.duckduckgo.com	bypass	search	DuckDuckGo subdomain not covered by the router's safe.duckduckgo.com redirect; the safe IP refuses noai and html/lite enforcement could not be verified	privacy/Search Engines
+noai.duckduckgo.com	bypass	search	DuckDuckGo subdomain not covered by the usual safe.duckduckgo.com redirect; the safe IP refuses noai and html/lite enforcement could not be verified	privacy/Search Engines
 oceanhero.today	bypass	search	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	internet-tools/Search Engines
-old.sage.moe	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked on the router (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
+old.sage.moe	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked in the target setup (see blocklist/README.md, Assumptions) (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
 opnxng.com	bypass	search	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	storage/Searx Instances
-reddit-chan.vercel.app	bypass	imageboard	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/4chan Tools
-redditstuff.github.io	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Subreddit Discovery
-rosintplus.github.io	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Reddit Search
-scrolldrop.com	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Reddit Search
+reddit-chan.vercel.app	bypass	imageboard	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/4chan Tools
+redditstuff.github.io	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Subreddit Discovery
+rosintplus.github.io	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Reddit Search
+scrolldrop.com	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Reddit Search
 search.carrot2.org	bypass	search	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	internet-tools/Search Engines
-search.pullpush.io	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Reddit Search
+search.pullpush.io	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Reddit Search
 search.tiago.zip	bypass	search	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	privacy/Search Engines
 search.yahoo.com	bypass	search	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	router check (2026-10-01)
 searchengine.party	bypass	search	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	privacy/Search Engines
-ssstik.io	bypass	frontend	TikTok viewer/downloader; tiktok.com is blocked on the router	social-media-tools/TikTok Tools | video-tools/Video Download
-subranking.com	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Subreddit Discovery
-subreddits.org	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Subreddit Discovery
-subredditstats.com	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Subreddit Discovery
-undelete.pullpush.io	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Reddit Search
-urlebird.com	bypass	frontend	TikTok viewer/downloader; tiktok.com is blocked on the router	social-media-tools/TikTok Tools
+ssstik.io	bypass	frontend	TikTok viewer/downloader; tiktok.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/TikTok Tools | video-tools/Video Download
+subranking.com	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Subreddit Discovery
+subreddits.org	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Subreddit Discovery
+subredditstats.com	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Subreddit Discovery
+undelete.pullpush.io	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Reddit Search
+urlebird.com	bypass	frontend	TikTok viewer/downloader; tiktok.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/TikTok Tools
 vuhuv.com	bypass	search	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	internet-tools/Search Engines
-vyrd.bibanon.org	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked on the router (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
+vyrd.bibanon.org	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked in the target setup (see blocklist/README.md, Assumptions) (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Archives
 web-sites-search.web.app	bypass	search	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	internet-tools/Search Engines
-www.4webm.org	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked on the router (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Tools
+www.4webm.org	bypass	imageboard	4chan archive/viewer; 4chan.org is blocked in the target setup (see blocklist/README.md, Assumptions) (archives sit behind Cloudflare, so board lists could not be read)	social-media-tools/4chan Tools
 www.directsearch.net	bypass	search	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	internet-tools/Search Engines
 www.ecosia.org	bypass	ai	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	ai/Image Generation | ai/Multiple Model Sites | internet-tools/Search Engines
 www.etools.ch	bypass	search	search engine with no vendor-documented DNS safe-search enforcement (inferred; live checks hit bot walls, Marginalia returned explicit-site results)	internet-tools/Search Engines
-www.reveddit.com	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Reddit Search
-www.rosint.dev	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked on the router	social-media-tools/Reddit Search
-www.yandex.com	bypass	search	Yandex domain not covered by the router's family-search redirect (resolves to normal Yandex servers)	router check (2026-10-01)
-ya.ru	bypass	search	Yandex domain not covered by the router's family-search redirect (resolves to normal Yandex servers)	router check (2026-10-01)
+www.reveddit.com	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Reddit Search
+www.rosint.dev	bypass	frontend	Reddit viewer/archive/search; reddit.com is blocked in the target setup (see blocklist/README.md, Assumptions)	social-media-tools/Reddit Search
+www.yandex.com	bypass	search	Yandex domain not covered by the usual family-search redirect (resolves to normal Yandex servers)	router check (2026-10-01)
+ya.ru	bypass	search	Yandex domain not covered by the usual family-search redirect (resolves to normal Yandex servers)	router check (2026-10-01)
 0xacab.org	review	bypass	VPN/proxy/DNS service; not in Hagezi bypass list; enable that list rather than listing these here	file-tools/File Info / Metadata | privacy/VPN
 0xerr0r.github.io	review	bypass	VPN/proxy/DNS service; not in Hagezi bypass list; enable that list rather than listing these here	privacy/DNS Adblocking
 35mm.online	review	video	legal free/archive streaming (fmhy section: Film Archives)	non-english/Streaming | video/Film Archives

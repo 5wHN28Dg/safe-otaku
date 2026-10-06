@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Self-hosted, read-only, safe-mode MangaDex frontend for OpenWrt",
-  "license": "AGPL-3.0-only",
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "build:js": "esbuild src/index.jsx --bundle --outfile=dist/bundle.js --format=esm --minify --jsx=automatic --jsx-import-source=preact --target=es2020,chrome90,firefox90,safari15",
     "build:static": "node scripts/copy-static.js",
