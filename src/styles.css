@@ -1,11 +1,12 @@
 :root {
-  --bg: #ffffff;
-  --fg: #1a1a1a;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --accent: #4d6bfe;
-  --accent-hover: #3a55d9;
-  --surface: #f9fafb;
+  color-scheme: dark;
+  --bg: #000000;
+  --fg: #e5e5e5;
+  --muted: #9ca3af;
+  --border: #262626;
+  --accent: #7b93ff;
+  --accent-hover: #9aacff;
+  --surface: #111111;
   --radius: 8px;
 }
 
@@ -101,7 +102,7 @@ main {
 .search-bar button {
   padding: 0.6rem 1.2rem;
   background: var(--accent);
-  color: white;
+  color: #000000;
   border: none;
   border-radius: var(--radius);
   font-size: 1rem;
@@ -140,6 +141,7 @@ main {
 .manga-card img,
 .cover-placeholder {
   width: 100%;
+  height: auto;
   aspect-ratio: 2 / 3;
   object-fit: cover;
   background: var(--surface);
@@ -169,6 +171,7 @@ main {
 
 .detail img.cover {
   width: 100%;
+  height: auto;
   border-radius: var(--radius);
   aspect-ratio: 2 / 3;
   object-fit: cover;
@@ -227,7 +230,7 @@ main {
 
 .actions button.primary {
   background: var(--accent);
-  color: white;
+  color: #000000;
   border-color: var(--accent);
 }
 
@@ -325,6 +328,7 @@ main {
 
 .reader-pages img {
   width: 100%;
+  height: auto;
   display: block;
   border-radius: 4px;
 }
@@ -406,7 +410,7 @@ main {
 }
 
 .error {
-  color: #b91c1c;
+  color: #f87171;
 }
 
 @media (max-width: 600px) {
