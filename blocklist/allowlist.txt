@@ -1,7 +1,14 @@
-# safe-otaku allowlist for adblock-lean. Append to /etc/adblock-lean/allowlist.
+# safe-otaku allowlist for adblock-lean (see blocklist/README.md, Deploy).
 #
-# explicit.txt blocks mangadex.org and every subdomain. The router's own MangaDex
-# proxy (cgi/md) resolves through the same dnsmasq, so it needs these two upstreams.
-# adblock-lean turns each line into server=/<domain>/#, which wins over local=/mangadex.org/.
+# explicit.txt blocks mangadex.org and every subdomain. adblock-lean turns each
+# line here into server=/<domain>/#, which wins over local=/mangadex.org/.
+#
+# The router's own MangaDex proxy (cgi/md) resolves through the same dnsmasq,
+# so it needs these two upstreams:
 api.mangadex.org
 uploads.mangadex.org
+#
+# The discussion forum: text threads with no NSFW media of its own. Kept
+# reachable on purpose. It does host comment threads for every title, including
+# the ratings the app filters out.
+forums.mangadex.org

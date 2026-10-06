@@ -28,7 +28,7 @@ Anime streaming sites are not blocked for ecchi. They are blocked only for henta
 | `explicit.txt` | Hentai/porn/smut sites, sites with explicit genres (Hentai, Smut, Adult, Pornographic, R-18), adult stores, hentai reader apps, leak archives, mangadex.org | Yes |
 | `ecchi.txt` | Unofficial manga/manhwa/novel aggregators with an Ecchi genre, and full-catalogue manga mirrors whose catalogues include ecchi titles | Yes |
 | `bypass.txt` | Hosts that get around a filter the router already enforces: search engines without DNS safe-search enforcement, DuckDuckGo/Yandex domains your redirects miss, and Reddit/TikTok/4chan viewers and archives | Yes |
-| `allowlist.txt` | `api.mangadex.org` and `uploads.mangadex.org`, so the router proxy keeps working after `mangadex.org` is blocked | Yes, with `explicit.txt` |
+| `allowlist.txt` | `api.mangadex.org` and `uploads.mangadex.org`, so the router proxy keeps working after `mangadex.org` is blocked, and `forums.mangadex.org`, which is kept reachable on purpose | Yes, with `explicit.txt` |
 
 Domains already covered by Hagezi NSFW are left out of the generated lists (marked `+` in `sites.tsv`). adblock-lean deduplicates across lists anyway.
 
@@ -49,6 +49,7 @@ From the repository root. The examples use `192.168.1.1`, OpenWrt's default addr
 ```
 cat blocklist/explicit.txt blocklist/ecchi.txt blocklist/bypass.txt | grep -vE '^[[:space:]]*(#|$)' | sort -u \
   | ssh root@192.168.1.1 'cat > /tmp/safe-otaku.txt'
+grep -vE '^[[:space:]]*(#|$)' blocklist/allowlist.txt | ssh root@192.168.1.1 'cat > /tmp/safe-otaku-allow.txt'
 ssh root@192.168.1.1 '
   BL=/etc/adblock-lean/blocklist; AL=/etc/adblock-lean/allowlist
   touch $BL $AL; cp $BL $BL.bak; cp $AL $AL.bak
@@ -56,8 +57,8 @@ ssh root@192.168.1.1 '
   strip $BL > /tmp/bl.user
   grep -vE "^[[:space:]]*(#|\$)" /tmp/bl.user | sort -u > /tmp/bl.mine
   { cat /tmp/bl.user; echo "# >>> safe-otaku"; grep -vxF -f /tmp/bl.mine /tmp/safe-otaku.txt; echo "# <<< safe-otaku"; } > $BL
-  { strip $AL; echo "# >>> safe-otaku"; printf "api.mangadex.org\nuploads.mangadex.org\n"; echo "# <<< safe-otaku"; } > /tmp/al && mv /tmp/al $AL
-  rm -f /tmp/bl.user /tmp/bl.mine /tmp/safe-otaku.txt
+  { strip $AL; echo "# >>> safe-otaku"; cat /tmp/safe-otaku-allow.txt; echo "# <<< safe-otaku"; } > /tmp/al && mv /tmp/al $AL
+  rm -f /tmp/bl.user /tmp/bl.mine /tmp/safe-otaku.txt /tmp/safe-otaku-allow.txt
   service adblock-lean start
 '
 ```
@@ -67,11 +68,14 @@ ssh root@192.168.1.1 '
 Verify from a LAN client:
 
 ```
-dig @192.168.1.1 mangadex.org          # NXDOMAIN
+dig @192.168.1.1 mangadex.org +short   # no address
 dig @192.168.1.1 api.mangadex.org      # resolves (allowlist)
+dig @192.168.1.1 forums.mangadex.org   # resolves (allowlist)
 dig @192.168.1.1 sukebei.nyaa.si       # NXDOMAIN
 dig @192.168.1.1 noai.duckduckgo.com   # NXDOMAIN (bypass.txt)
 ```
+
+`mangadex.org` itself may come back as NOERROR with an empty answer instead of NXDOMAIN: dnsmasq answers that way for a blocked domain once several of its subdomains are allowlisted. Either way no address is returned, so nothing can connect.
 
 Cost: about 1,275 extra domains on top of Hagezi's 84k (950 explicit, 274 ecchi, 51 bypass). That is under 2% more dnsmasq entries and about 20 KB.
 
