@@ -60,7 +60,7 @@ OpenWrt 25.12.5's source (tag `v25.12.5`, uhttpd `7b1bec4`, uclient `daad21f`) w
 - **uhttpd passes `HTTP_AUTHORIZATION` and `HTTP_COOKIE` to CGI.** The current CGI ignores both.
 - **25.12 uses `apk` instead of `opkg`.** No effect here: the project installs no packages.
 
-Conclusion: no architectural change. Revisit if CGI latency is measured as a problem, or if an auth feature is approved.
+Conclusion: no architectural change. Revisit if CGI latency is measured as a problem, or if MangaDex makes public API clients available (see [Why there is no login](docs/how-it-works.md#why-there-is-no-login)).
 
 ## Rules for changes
 
@@ -76,7 +76,7 @@ Conclusion: no architectural change. Revisit if CGI latency is measured as a pro
 
 **Do not weaken the allowlists in the CGI.** That covers the endpoint list, the query-key list, the at-home rating check and the image path patterns. The CGI runs as root (uhttpd on OpenWrt does not drop privileges) and proxies to hosts the user does not control. Each new endpoint or key needs evidence that MangaDex applies `contentRating[]` to it.
 
-**Do not add features that require authentication.** The app is read-only by design. It does not log in, comment, rate, or upload.
+**Do not add features that require authentication.** The app is read-only by design. It does not log in, comment, rate, or upload. MangaDex offers only personal API clients (one account per client), so a login would mean one shared MangaDex account for the whole household; [docs/how-it-works.md](docs/how-it-works.md#why-there-is-no-login) has the evidence and when to revisit.
 
 **Any new feature must fit the RAM, flash, and bundle budgets.** If it does not, it is the wrong feature for this host. The policy document this project follows puts the platform's constraints above feature convenience.
 

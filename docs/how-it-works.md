@@ -57,10 +57,24 @@ MangaDex has taken down most officially licensed English translations. For those
 
 ## What the app does not do
 
-- Log in, comment, rate, or upload. It is read-only by design.
+- Log in, comment, rate, or upload. It is read-only; see [Why there is no login](#why-there-is-no-login).
 - Show `erotica` or `pornographic` titles, or titles with an excluded tag.
 - Filter other sites. `mangadex.org` itself stays reachable until you block it at the DNS level; the [blocklists](../blocklist/README.md) do that.
 - Cache images on the router.
+
+## Why there is no login
+
+Logging in (to follow series, sync reading progress, rate titles) was considered and dropped, because MangaDex's API can't support it for a household:
+
+- **Only personal API clients exist.** MangaDex's [authentication docs](https://api.mangadex.org/docs/02-authentication/) describe two client types. Public clients, which let any user sign in through `auth.mangadex.org`, are marked "not yet available". Personal clients use the OAuth password grant, and "only the account that owns a personal client can be used with it". They also skip the account's multi-factor settings.
+- **So a login would be one shared account.** Everyone on the network would act as the same MangaDex user. That user's client secret, password and refresh token would sit on the router, and the router's CGI runs as root.
+- **Comments are not in the API.** It can create the forum thread behind a title's comments (`POST /forums/thread`), but comments themselves are posted on `forums.mangadex.org`, a separate forum with its own login.
+- **Uploads don't fit the router.** Uploads allow up to 20 MB per file and 150 MB per session, which would pass through a 256 MB router as temporary files in RAM. They also need an account in good standing and pass staff review.
+- **Rating alone would work** (`POST /rating/{mangaId}`), but only as that one shared account.
+
+Logged-in endpoints would also need the same evidence as every other endpoint before being forwarded. Some, like `/user/follows/manga`, ignore `contentRating[]`, so each would need its own filtering.
+
+**When to revisit.** If MangaDex makes public clients available (the authorization-code flow, one sign-in per person), login becomes feasible without a shared account. The router side is ready: OpenWrt 25.12's uhttpd passes the `Authorization` header to CGI scripts, and `uclient-fetch` can forward headers and POST bodies (`--header`, `--method`, `--body-data`). See [AGENT.md](../AGENT.md) for the rules any such change must meet.
 
 ## Security notes
 
